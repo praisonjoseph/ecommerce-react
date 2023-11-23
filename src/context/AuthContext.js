@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { createContext } from 'react';
 import { useContext } from 'react';
-export const AuthContext = createContext();
 import { auth } from '../firebase';
 import {
+    createUserWithEmailAndPassword,
     onAuthStateChanged,
     signInWithEmailAndPassword,
     signOut,
 } from "firebase/auth";
+
+export const AuthContext = createContext();
 
 export function useAuth() {
     return useContext(AuthContext);
@@ -27,28 +29,17 @@ const AuthProvider = ({ children }) => {
         return () => unsubscribe();
     }, []);
 
-    const signUp = async (email, password) => {
-        try {
-            await createUserWithEmailAndPassword(auth, email, password)
-        } catch (error) {
-            console.error('Error signing up:', error.message);
-        }
+
+    const signUp = (email, password) => {
+        return createUserWithEmailAndPassword(auth, email, password)
     }
 
-    const signIn = async (email, password) => {
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-        } catch (error) {
-            console.error('Error signing in:', error.message);
-        }
+    const signIn = (email, password) => {
+        return signInWithEmailAndPassword(auth, email, password);
     };
 
-    const logOut = async () => {
-        try {
-            await signOut(auth);
-        } catch (error) {
-            console.error('Error signing out:', error.message);
-        }
+    const logOut = () => {
+        return signOut(auth);
     };
 
     const value = {

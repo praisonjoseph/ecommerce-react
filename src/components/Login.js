@@ -2,14 +2,26 @@ import React, { useRef } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import CenteredContainer from './CenteredContainer'
+import { useAuth } from '../context/AuthContext'
+import { toast } from "react-toastify";
 
 function Login() {
+    const {signIn} = useAuth()
     const navigate = useNavigate();
     const emailRef = useRef()
     const passwordRef = useRef()
     
-    const handleSubmit = () => {
-        navigate("/")
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            await signIn(emailRef.current.value, passwordRef.current.value)
+            toast.success("Login successful.");
+            navigate("/")
+        } catch (error) {
+            console.log(error.message)
+            toast.error(error.message);
+        }
+        
     }
 
     return (
