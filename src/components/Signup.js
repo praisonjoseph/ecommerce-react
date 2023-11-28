@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import CenteredContainer from './CenteredContainer'
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 
 function Signup() {
     const navigate = useNavigate();
@@ -31,7 +31,7 @@ function Signup() {
     }
     return (
         <CenteredContainer>
-            <Card>
+            <Card className="mt-5">
                 <Card.Body>
                     <h2 className='text-center mb-4'>Sign Up</h2>
                     {error && <Alert variant='danger'>{error}</Alert>}

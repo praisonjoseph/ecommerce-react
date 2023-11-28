@@ -1,8 +1,7 @@
-import { Navbar, Nav } from 'react-bootstrap'
+import { Navbar, Nav, Form, Button, Container } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
-import Container from 'react-bootstrap/Container';
-import { useAuth } from "../context/AuthContext";
-import { FaShoppingCart, FaTimes, FaUserCircle } from "react-icons/fa";
+import { useAuth } from "../contexts/AuthContext";
+import { FaShoppingCart, FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 export const ShowOnLogin = ({ children }) => {
@@ -21,10 +20,11 @@ export const ShowOnLogout = ({ children }) => {
     return null;
 };
 
-export default function NavbarComponent() {
+export default function Header({searchTerm, handleSearchInput}) {
     const { user, logOut } = useAuth()
     const navigate = useNavigate();
     console.log(user)
+    console.log(searchTerm)
 
     const logoutUser = async () => {
         try {
@@ -36,11 +36,11 @@ export default function NavbarComponent() {
             console.log(error.message)
             toast.error(error.message);
         }
-        
+
     }
     return (
-        <Navbar expand="md" sticky="top" data-bs-theme="dark" className="bg-body-tertiary">
-            <Container>
+        <Navbar expand="md" data-bs-theme="dark" className="bg-body-tertiary">
+            <Container fluid>
                 <Navbar.Brand as={Link} to="/">
                     <img
                         alt=""
@@ -49,10 +49,21 @@ export default function NavbarComponent() {
                         height="40"
                         className="d-inline-block align-center"
                     />{' '}
-                    Best Buy
+                    Buy Busy
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
+                    <Form className="d-flex ms-auto">
+                        <Form.Control
+                            type="search"
+                            placeholder="Search Products"
+                            className="me-2"
+                            aria-label="Search"
+                            value={searchTerm}
+                            onChange={handleSearchInput}
+                        />
+                        <Button variant="outline-success"><FaSearch/></Button>
+                    </Form>
                     <Nav className="ms-auto">
                         <Nav.Link as={Link} to="/">Home</Nav.Link>
                         <ShowOnLogout>
@@ -66,7 +77,7 @@ export default function NavbarComponent() {
                             <Nav.Link as={Link} to="/cart">
                                 Cart
                                 <FaShoppingCart size={20} />
-                                <p>{}</p>
+                                <p>{ }</p>
                             </Nav.Link>
                         </span>
                     </Nav>

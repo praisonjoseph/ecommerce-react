@@ -1,8 +1,8 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState} from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import CenteredContainer from './CenteredContainer'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 import { toast } from "react-toastify";
 
 function Login() {
@@ -10,10 +10,12 @@ function Login() {
     const navigate = useNavigate();
     const emailRef = useRef()
     const passwordRef = useRef()
-    
+    const [loading, setLoading] = useState(false)
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
+            setLoading(true)
             await signIn(emailRef.current.value, passwordRef.current.value)
             toast.success("Login successful.");
             navigate("/")
@@ -21,12 +23,12 @@ function Login() {
             console.log(error.message)
             toast.error(error.message);
         }
-        
+        setLoading(false)
     }
 
     return (
         <CenteredContainer>
-            <Card>
+            <Card className="mt-5" >
                 <Card.Body>
                     <h2 className='text-center mb-4'>Log In</h2>
                     <Form onSubmit={handleSubmit}>
@@ -38,7 +40,7 @@ function Login() {
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" ref={passwordRef} required />
                         </Form.Group>
-                        <Button type='submit' className='w-100 mt-2'> Log In</Button>
+                        <Button disabled={loading} type='submit' className='w-100 mt-2'> Log In</Button>
                     </Form>
                     <div className='w-100 text-center mt-2'>
                         <Link >Forgot Password?</Link>

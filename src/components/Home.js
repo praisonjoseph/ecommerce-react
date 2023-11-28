@@ -1,20 +1,33 @@
 import React from 'react'
-import { useAuth } from '../context/AuthContext'
-import NavbarComponent from './Header'
+import { useAuth } from '../contexts/AuthContext'
+import useProducts from '../hooks/useProducts'
+import { Col, Container, Row } from 'react-bootstrap'
+import Product from './Product'
+import ProductFilter from './ProductFilter'
 
 function Home() {
-  const {user} = useAuth()
-  console.log(user)
-  const productsArray = new Array(100).fill(null);
+  const { user } = useAuth()
+  const { products, isLoading } = useProducts()
+  console.log(products)
   return (
-    <>
-    <NavbarComponent/>
-    {productsArray.map((_, index) => (
-        <div key={index}>
-          Product {index + 1}
-        </div>
-      ))}
-    </>
+    <Container className='d-flex flex-column mt-3'>
+      <Row>
+        <Col xs={12} md={3}>
+          <ProductFilter />
+        </Col>
+        <Col xs={12} md={9}>
+          <Row>
+            {products.map((product, index) => (
+              // <Col key={index} style={{ border: "1px red solid" }} xs={12} sm={6} md={4} lg={3}>
+              <Col key={index} xs={12} sm={6} md={4}>
+                <Product product={product} />
+              </Col>
+            ))}
+          </Row>
+        </Col>
+      </Row>
+    </Container>
+
   )
 }
 
