@@ -1,7 +1,14 @@
 import React from 'react'
 import { Button, Card } from 'react-bootstrap'
+import { useCart } from '../contexts/CartContext'
 
 function Product({product}) {
+    const {cartProducts, AddToCart} = useCart()
+    console.log(cartProducts)
+    const AddToCartHandler = () => {
+        AddToCart(product)
+    }
+
     return (
         <Card className='d-flex flex-column shadow mb-5 bg-white rounded'>
             <Card.Img 
@@ -17,7 +24,7 @@ function Product({product}) {
                     Some quick example text to build on the card title and make up the
                     bulk of the card's content.
                 </Card.Text>
-                <Button variant="primary">Add to Cart</Button>
+                <Button variant="primary" onClick={AddToCartHandler}>Add to Cart</Button>
             </Card.Body>
         </Card>
     )

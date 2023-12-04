@@ -2,8 +2,8 @@ import React from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import useProducts from '../hooks/useProducts'
 import { Col, Container, Row } from 'react-bootstrap'
-import Product from './Product'
-import ProductFilter from './ProductFilter'
+import Product from '../components/Product'
+import ProductFilter from '../components/ProductFilter'
 
 function Home() {
   const { user } = useAuth()

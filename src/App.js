@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ToastContainer } from "react-toastify";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import Orders from "./components/Orders";
-import Cart from "./components/Cart";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Orders from "./pages/Orders";
+import Cart from "./pages/Cart";
 import Header from "./components/Header";
 
 
