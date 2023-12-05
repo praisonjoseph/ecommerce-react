@@ -25,8 +25,8 @@ export const ShowOnLogout = ({ children }) => {
 export default function Header() {
     const { user, logOut } = useAuth()
     const navigate = useNavigate();
-    const {searchTerm, FilterSearchTerm } = useFilter()
-    const {cartProducts} = useCart()
+    const { searchTerm, FilterSearchTerm } = useFilter()
+    const { cartProducts } = useCart()
     console.log(cartProducts)
     console.log(searchTerm)
 
@@ -64,9 +64,9 @@ export default function Header() {
                             className="me-2"
                             aria-label="Search"
                             value={searchTerm}
-                            onChange={(event)=>{FilterSearchTerm(event)}}
+                            onChange={(event) => { FilterSearchTerm(event) }}
                         />
-                        <Button variant="outline-success"><FaSearch/></Button>
+                        <Button variant="outline-success"><FaSearch /></Button>
                     </Form>
                     <Nav className="ms-auto">
                         <Nav.Link as={Link} to="/">Home</Nav.Link>
@@ -77,11 +77,14 @@ export default function Header() {
                             <Nav.Link as={Link} to="/orders">Orders</Nav.Link>
                             <Nav.Link onClick={logoutUser}>Logout</Nav.Link>
                         </ShowOnLogin>
-                        <span>
+                        <span style={{ position: 'relative' }}>
                             <Nav.Link as={Link} to="/cart">
-                                Cart
                                 <FaShoppingCart size={20} />
-                                <p>{cartProducts.length >= 0 ? cartProducts.length: 0}</p>
+                                {cartProducts.length > 0 &&
+                                    <span
+                                        style={{ position: 'absolute', top: "0", color: "red" }}>
+                                        {cartProducts.length}
+                                    </span>}
                             </Nav.Link>
                         </span>
                     </Nav>
