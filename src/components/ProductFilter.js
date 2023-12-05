@@ -1,7 +1,43 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card } from 'react-bootstrap'
+import { useFilter } from '../contexts/filterContext'
+import useProducts from '../hooks/useProducts'
 
 function ProductFilter({ product }) {
+    const { products, isLoading } = useProducts()
+    const {
+        filteredProducts,
+        FilterByPrice,
+        FilterByCategory,
+        FilterByCompany,
+        FilterByColor,
+    } = useFilter()
+    const [price, SetPrice] = useState(1)
+    const [category, SetCategory] = useState("")
+    const [company, SetCompany] = useState("")
+    const [color, SetColor] = useState("")
+
+    useEffect(() => {
+        FilterByPrice(products, price)
+        console.log(filteredProducts)
+    }, [products, price])
+
+    useEffect(() => {
+        FilterByCategory(products, category)
+        console.log(filteredProducts)
+    }, [products, category])
+
+    useEffect(() => {
+        FilterByCompany(products, company)
+        console.log(filteredProducts)
+    }, [products, company])
+
+    useEffect(() => {
+        FilterByColor(products, color)
+        console.log(filteredProducts)
+    }, [products, color])
+
+
     return (
         <Card
             className='d-flex flex-column my-3'

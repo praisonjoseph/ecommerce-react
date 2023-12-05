@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import Orders from "./pages/Orders";
 import Cart from "./pages/Cart";
 import Header from "./components/Header";
+import FilterProvider from "./contexts/filterContext";
 
 
 function App() {
@@ -18,15 +19,17 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+      <FilterProvider>
       <Header searchTerm={searchTerm} handleSearchInput={handleSearchInput}/>
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<Home/>} />
+        <Route path="/" element={<Home searchTerm={searchTerm} />} />
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<Signup/>} />
         <Route path="/orders" element={<Orders/>} />
         <Route path="/cart" element={<Cart/>} />
       </Routes>
+      </FilterProvider>
       </BrowserRouter>
     </div>
   );

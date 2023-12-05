@@ -1,7 +1,9 @@
 export const ACTIONS = {
     ADD_TO_CART: 'ADD_TO_CART',
-    UPDATE_CART: 'UPDATE_CART',
-    DELETE_FROM_CART: 'DELETE_FROM_CART'
+    INCREASE_QTY: 'INCREASE_QTY',
+    DECREASE_QTY: 'DECREASE_QTY',
+    DELETE_FROM_CART: 'DELETE_FROM_CART',
+    CLEAR_CART: 'CLEAR_CART'
 }
 
 export const intitialState = {
@@ -33,22 +35,37 @@ export function CartReducer(state, { type, payload }) {
                     cartProducts: [...state.cartProducts, { ...payload, quantity: 1 }],
                 };
             }
-
-        case ACTIONS.UPDATE_CART:
-            return {
-                ...state,
-                folder: payload.folder
-            }
         case ACTIONS.DELETE_FROM_CART:
             return {
                 ...state,
-                childFolders: payload.childFolders,
+                cartProducts: state.cartProducts.filter((item) =>
+                    item.id !== payload.id
+                ),
             }
-        case ACTIONS.SET_CHILD_FILES:
+        case ACTIONS.INCREASE_QTY:
             return {
                 ...state,
-                childFiles: payload.childFiles,
-            }
+                cartProducts: state.cartProducts.map((item) =>
+                    item.id === payload.id
+                        ? { ...item, quantity: item.quantity - payload.qty }
+                        : item
+                ),
+            };
+        case ACTIONS.DECREASE_QTY:
+            return {
+                ...state,
+                cartProducts: state.cartProducts.map((item) =>
+                    item.id === payload.id
+                        ? { ...item, quantity: item.quantity - payload.qty }
+                        : item
+                ),
+            };
+            case ACTIONS.CLEAR_CART:
+                return {
+                    ...state,
+                    cartProducts: []
+                };
+
         default:
             return state
     }

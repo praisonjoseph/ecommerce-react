@@ -4,9 +4,14 @@ import { useCart } from '../contexts/CartContext'
 
 function Product({product}) {
     const {cartProducts, AddToCart} = useCart()
-    console.log(cartProducts)
+    // console.log(cartProducts)
     const AddToCartHandler = () => {
-        AddToCart(product)
+        AddToCart({
+            id: product.id,
+            img: product.img,
+            name: product.name,
+            newPrice: product.newPrice,
+        })
     }
 
     return (
