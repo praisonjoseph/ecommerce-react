@@ -3,7 +3,7 @@ import { Button, Card } from 'react-bootstrap'
 import { useCart } from '../contexts/CartContext'
 
 function Product({product}) {
-    const {cartProducts, AddToCart} = useCart()
+    const {AddToCart} = useCart()
     // console.log(cartProducts)
     const AddToCartHandler = () => {
         AddToCart({

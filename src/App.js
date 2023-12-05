@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home";

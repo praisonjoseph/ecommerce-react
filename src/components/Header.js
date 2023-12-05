@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { FaShoppingCart, FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useFilter } from '../contexts/filterContext';
+import { useCart } from '../contexts/CartContext';
 
 export const ShowOnLogin = ({ children }) => {
     const { user } = useAuth()
@@ -25,7 +26,8 @@ export default function Header() {
     const { user, logOut } = useAuth()
     const navigate = useNavigate();
     const {searchTerm, FilterSearchTerm } = useFilter()
-    console.log(user)
+    const {cartProducts} = useCart()
+    console.log(cartProducts)
     console.log(searchTerm)
 
     const logoutUser = async () => {
@@ -79,7 +81,7 @@ export default function Header() {
                             <Nav.Link as={Link} to="/cart">
                                 Cart
                                 <FaShoppingCart size={20} />
-                                <p>{ }</p>
+                                <p>{cartProducts.length >= 0 ? cartProducts.length: 0}</p>
                             </Nav.Link>
                         </span>
                     </Nav>
