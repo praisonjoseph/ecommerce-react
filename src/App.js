@@ -11,19 +11,15 @@ import FilterProvider from "./contexts/filterContext";
 
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const handleSearchInput = (event) => {
-    setSearchTerm(event.target.value);
-  };
 
   return (
     <div>
       <BrowserRouter>
       <FilterProvider>
-      <Header searchTerm={searchTerm} handleSearchInput={handleSearchInput}/>
+      <Header />
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<Home searchTerm={searchTerm} />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<Signup/>} />
         <Route path="/orders" element={<Orders/>} />

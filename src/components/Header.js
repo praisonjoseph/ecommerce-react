@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from "../contexts/AuthContext";
 import { FaShoppingCart, FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useFilter } from '../contexts/filterContext';
 
 export const ShowOnLogin = ({ children }) => {
     const { user } = useAuth()
@@ -20,9 +21,10 @@ export const ShowOnLogout = ({ children }) => {
     return null;
 };
 
-export default function Header({searchTerm, handleSearchInput}) {
+export default function Header() {
     const { user, logOut } = useAuth()
     const navigate = useNavigate();
+    const {searchTerm, FilterSearchTerm } = useFilter()
     console.log(user)
     console.log(searchTerm)
 
@@ -60,7 +62,7 @@ export default function Header({searchTerm, handleSearchInput}) {
                             className="me-2"
                             aria-label="Search"
                             value={searchTerm}
-                            onChange={handleSearchInput}
+                            onChange={(event)=>{FilterSearchTerm(event)}}
                         />
                         <Button variant="outline-success"><FaSearch/></Button>
                     </Form>

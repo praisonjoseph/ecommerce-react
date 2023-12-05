@@ -3,7 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap'
 import ProductFilter from '../components/ProductFilter'
 import ProductList from '../components/ProductList'
 
-function Home({searchTerm}) {
+function Home() {
   const { user } = useAuth()
 
   return (
@@ -13,7 +13,7 @@ function Home({searchTerm}) {
           <ProductFilter />
         </Col>
         <Col xs={12} md={9}>
-          <ProductList searchTerm={searchTerm} />
+          <ProductList/>
         </Col>
       </Row>
     </Container>

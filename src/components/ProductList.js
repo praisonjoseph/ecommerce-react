@@ -4,10 +4,11 @@ import { Col, Row } from 'react-bootstrap'
 import useProducts from '../hooks/useProducts'
 import { useFilter } from '../contexts/filterContext'
 
-function ProductList({searchTerm}) {
+function ProductList() {
   const { products} = useProducts()
   const { 
-    filteredProducts, 
+    filteredProducts,
+    searchTerm, 
     FilterBySearch, 
   } = useFilter()
   console.log(products, searchTerm)

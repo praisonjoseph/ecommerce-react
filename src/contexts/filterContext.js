@@ -61,6 +61,16 @@ const FilterProvider = ({ children }) => {
         }
         });
       };
+
+      const FilterSearchTerm = (event) => {
+        dispatch({
+          type: ACTIONS.FILTER_SEARCHTERM,
+          payload: {
+            event
+        }
+        });
+      };
+
       const ClearFilter = () => {
         dispatch({
           type: ACTIONS.CLEAR_FILTER,
@@ -74,6 +84,7 @@ const FilterProvider = ({ children }) => {
         FilterByCategory,
         FilterByPrice,
         FilterBySearch,
+        FilterSearchTerm,
         ClearFilter,
     }
     return (
