@@ -43,11 +43,14 @@ export function CartReducer(state, { type, payload }) {
                 ),
             }
         case ACTIONS.INCREASE_QTY:
+            let tempCart = []
+
             return {
                 ...state,
                 cartProducts: state.cartProducts.map((item) =>
                     item.id === payload.id
-                        ? { ...item, quantity: item.quantity - payload.qty }
+                        ? { ...item, quantity: item.quantity + payload.qty, 
+                            newPrice: item.newPrice * item.quantity }
                         : item
                 ),
             };
@@ -56,7 +59,8 @@ export function CartReducer(state, { type, payload }) {
                 ...state,
                 cartProducts: state.cartProducts.map((item) =>
                     item.id === payload.id
-                        ? { ...item, quantity: item.quantity - payload.qty }
+                        ? { ...item, quantity: item.quantity === 1 ? 1:  item.quantity - payload.qty, 
+                            newPrice: item.newPrice * item.quantity }
                         : item
                 ),
             };

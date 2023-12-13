@@ -9,7 +9,7 @@ function Product({product}) {
         AddToCart({
             id: product.id,
             img: product.img,
-            name: product.name,
+            name: product.title,
             newPrice: product.newPrice,
         })
     }

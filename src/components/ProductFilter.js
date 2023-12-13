@@ -4,7 +4,6 @@ import { useFilter } from '../contexts/filterContext'
 import useProducts from '../hooks/useProducts'
 
 function ProductFilter() {
-    console.log("render")
     const { products, isLoading } = useProducts()
     const {
         FilterByPrice,
