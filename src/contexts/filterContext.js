@@ -71,9 +71,12 @@ const FilterProvider = ({ children }) => {
         });
       };
 
-      const ClearFilter = () => {
+      const ClearFilter = (products) => {
         dispatch({
           type: ACTIONS.CLEAR_FILTER,
+          payload: {
+            products
+        }
         });
       };
 

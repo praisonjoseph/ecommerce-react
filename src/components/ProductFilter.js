@@ -1,62 +1,84 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Card } from 'react-bootstrap'
+import { Button, Card, Form } from 'react-bootstrap'
 import { useFilter } from '../contexts/filterContext'
 import useProducts from '../hooks/useProducts'
 
-function ProductFilter({ product }) {
+function ProductFilter() {
     const { products, isLoading } = useProducts()
     const {
-        filteredProducts,
         FilterByPrice,
         FilterByCategory,
         FilterByCompany,
         FilterByColor,
+        ClearFilter
     } = useFilter()
     const [price, SetPrice] = useState(1)
-    const [category, SetCategory] = useState("")
-    const [company, SetCompany] = useState("")
-    const [color, SetColor] = useState("")
 
-    useEffect(() => {
-        FilterByPrice(products, price)
-        console.log(filteredProducts)
-    }, [products, price])
+    const allCategories = [
+        "All",
+        ...new Set(products.map((product) => product.category)),
+    ];
 
-    useEffect(() => {
-        FilterByCategory(products, category)
-        console.log(filteredProducts)
-    }, [products, category])
-
-    useEffect(() => {
-        FilterByCompany(products, company)
-        console.log(filteredProducts)
-    }, [products, company])
-
-    useEffect(() => {
-        FilterByColor(products, color)
-        console.log(filteredProducts)
-    }, [products, color])
-
+    const allCompanies = [
+        "All",
+        ...new Set(products.map((product) => product.company)),
+    ];
+    const allColors = [
+        "All",
+        ...new Set(products.map((product) => product.color)),
+    ];
 
     return (
         <Card
             className='d-flex flex-column my-3'
             style={{ position: 'sticky', top: 40 }}
         >
-            <Card.Img
-                style={{ objectFit: 'contain' }}
-                variant="top"
-                width="200"
-                height="200"
-                src="test"
-            />
             <Card.Body>
-                <Card.Title>Product Filter</Card.Title>
+                <Card.Title>Filter</Card.Title>
                 <Card.Text>
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
+                    <Form.Label>Price: {price}</Form.Label>
+                    <Form.Range
+                        onChange={
+                            (event) => {
+                                SetPrice(event.target.value);
+                                FilterByPrice(products, event.target.value);
+                            }
+                        }
+                    />
+                    <br />
+                    <Form.Select aria-label="Default select example"
+                        onChange={(event) => { FilterByCompany(products, event.target.value); }
+                        }
+                    >
+                        <option>Company</option>
+                        {allCompanies.map((company, index) => (
+                            <option key={index} value={company}>{company.toUpperCase()}</option>
+                        ))}
+                      </Form.Select>
+                    <Form.Select aria-label="Default select example"
+                        onChange={(event) => { FilterByCategory(products, event.target.value); }
+                        }
+                    >
+                        <option>Category</option>
+                        {allCategories.map((category, index) => (
+                            <option key={index} value={category}>{category.toUpperCase()}</option>
+                        ))}
+                    </Form.Select>
+                    <Form.Select aria-label="Default select example"
+                        onChange={(event) => { FilterByColor(products, event.target.value); }
+                        }
+                    >
+                        <option>Color</option>
+                        {allColors.map((color, index) => (
+                            <option key={index} value={color}>{color.toUpperCase()}</option>
+                        ))}
+                    </Form.Select>
                 </Card.Text>
-                <Button variant="primary">Clear Filter</Button>
+                <Button variant="primary"
+                    onClick={() => { ClearFilter(products) }}
+                >
+                    Clear Filter
+                </Button>
             </Card.Body>
         </Card>
     )

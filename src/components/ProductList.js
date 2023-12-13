@@ -17,6 +17,7 @@ function ProductList() {
     FilterBySearch(products, searchTerm)
   },[products, searchTerm])
 
+
   return (
     <Row>
     {filteredProducts.map((product, index) => (

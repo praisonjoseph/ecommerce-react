@@ -14,27 +14,44 @@ export const intitialState = {
 }
 
 export function FilterReducer(state, { type, payload }) {
+    let tempProducts = [];
     switch (type) {
         case ACTIONS.FILTER_BY_CATEGORY:
-            return {
-                ...state,
-                filteredProducts: payload.products.filter((product) =>
+            if (payload.category === "All") {
+                tempProducts = payload.products;
+            } else {
+                tempProducts = payload.products.filter((product) =>
                     product.category === payload.category
                 )
+            }
+            return {
+                ...state,
+                filteredProducts: tempProducts,
+
             };
         case ACTIONS.FILTER_BY_COMPANY:
-            return {
-                ...state,
-                filteredProducts: payload.products.filter((product) =>
+            if (payload.company === "All") {
+                tempProducts = payload.products;
+            } else {
+                tempProducts = payload.products.filter((product) =>
                     product.company === payload.company
                 )
-            };
-        case ACTIONS.FILTER_BY_COLOR:
+            }
             return {
                 ...state,
-                filteredProducts: payload.products.filter((product) =>
+                filteredProducts: tempProducts
+            };
+        case ACTIONS.FILTER_BY_COLOR:
+            if (payload.color === "All") {
+                tempProducts = payload.products;
+            } else {
+                tempProducts = payload.products.filter((product) =>
                     product.color === payload.color
                 )
+            }
+            return {
+                ...state,
+                filteredProducts: tempProducts
             };
 
         case ACTIONS.FILTER_BY_PRICE:
@@ -52,14 +69,14 @@ export function FilterReducer(state, { type, payload }) {
                 )
             };
         case ACTIONS.FILTER_SEARCHTERM:
-                return {
-                    ...state,
-                    searchTerm: payload.event.target.value
-                };
+            return {
+                ...state,
+                searchTerm: payload.event.target.value
+            };
         case ACTIONS.CLEAR_FILTER:
             return {
                 ...state,
-                filteredProducts: []
+                filteredProducts: payload.products
             };
 
         default:
