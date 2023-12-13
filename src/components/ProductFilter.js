@@ -4,6 +4,7 @@ import { useFilter } from '../contexts/filterContext'
 import useProducts from '../hooks/useProducts'
 
 function ProductFilter() {
+    console.log("render")
     const { products, isLoading } = useProducts()
     const {
         FilterByPrice,
@@ -12,7 +13,10 @@ function ProductFilter() {
         FilterByColor,
         ClearFilter
     } = useFilter()
-    const [price, SetPrice] = useState(1)
+    const [price, setPrice] = useState(500)
+    const [selectedCompany, setSelectedCompany] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedColor, setSelectedColor] = useState('');
 
     const allCategories = [
         "All",
@@ -27,6 +31,15 @@ function ProductFilter() {
         "All",
         ...new Set(products.map((product) => product.color)),
     ];
+    const handleClearFilter = () => {
+        // Reset all dropdowns to their default values
+        setPrice(500);
+        setSelectedCompany('');
+        setSelectedCategory('');
+        setSelectedColor('');
+        // Call ClearFilter with the original product list
+        ClearFilter(products);
+    };
 
     return (
         <Card
@@ -38,44 +51,59 @@ function ProductFilter() {
                 <Card.Text>
                     <Form.Label>Price: {price}</Form.Label>
                     <Form.Range
+                        min={40}
+                        max={500}
+                        value={price}
                         onChange={
                             (event) => {
-                                SetPrice(event.target.value);
+                                setPrice(event.target.value);
                                 FilterByPrice(products, event.target.value);
                             }
                         }
                     />
                     <br />
                     <Form.Select aria-label="Default select example"
-                        onChange={(event) => { FilterByCompany(products, event.target.value); }
+                        onChange={(event) => {
+                            setSelectedCompany(event.target.value);
+                            FilterByCompany(products, event.target.value);
                         }
+                        }
+                        value={selectedCompany}
                     >
-                        <option>Company</option>
+                        <option disabled hidden value=''>Company</option>
                         {allCompanies.map((company, index) => (
                             <option key={index} value={company}>{company.toUpperCase()}</option>
                         ))}
-                      </Form.Select>
+                    </Form.Select>
                     <Form.Select aria-label="Default select example"
-                        onChange={(event) => { FilterByCategory(products, event.target.value); }
+                        onChange={(event) => {
+                            setSelectedCategory(event.target.value);
+                            FilterByCategory(products, event.target.value);
                         }
+                        }
+                        value={selectedCategory}
                     >
-                        <option>Category</option>
+                        <option disabled hidden value=''>Category</option>
                         {allCategories.map((category, index) => (
                             <option key={index} value={category}>{category.toUpperCase()}</option>
                         ))}
                     </Form.Select>
                     <Form.Select aria-label="Default select example"
-                        onChange={(event) => { FilterByColor(products, event.target.value); }
+                        onChange={(event) => {
+                            setSelectedColor(event.target.value);
+                            FilterByColor(products, event.target.value);
                         }
+                        }
+                        value={selectedColor}
                     >
-                        <option>Color</option>
+                        <option disabled hidden value=''>Color</option>
                         {allColors.map((color, index) => (
                             <option key={index} value={color}>{color.toUpperCase()}</option>
                         ))}
                     </Form.Select>
                 </Card.Text>
                 <Button variant="primary"
-                    onClick={() => { ClearFilter(products) }}
+                    onClick={handleClearFilter}
                 >
                     Clear Filter
                 </Button>
