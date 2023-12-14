@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { useFilter } from '../contexts/filterContext'
 import useProducts from '../hooks/useProducts'

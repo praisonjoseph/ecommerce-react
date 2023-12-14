@@ -1,85 +1,117 @@
-import { useEffect, useState } from "react";
-import { Button, Col, Form, Image, ListGroup, Row } from "react-bootstrap";
+import { useEffect } from "react";
+import { Button, Col, Image, ListGroup, Row, Stack } from "react-bootstrap";
 import { AiFillDelete } from "react-icons/ai";
 import { useCart } from '../contexts/CartContext'
 import styles from './Cart.module.css'
+import { Link } from "react-router-dom";
+
 const Cart = () => {
   const {
     cartProducts,
+    totalPrice,
     IncreaseQty,
     DecreaseQty,
     DeleteFromCart,
-
+    SetTotal,
+    ClearCart,
   } = useCart()
-  const [total, setTotal] = useState();
 
   useEffect(() => {
-    setTotal(
-      cartProducts.reduce((acc, curr) => acc + Number(curr.newPrice) * curr.quantity, 0)
-    );
-  }, [cartProducts]);
+    SetTotal()
+  }, [cartProducts, SetTotal]);
 
   return (
-    <div className={styles.home}>
-      <div className={styles.productContainer}>
-        <ListGroup>
-          {cartProducts.map((prod) => (
-            <ListGroup.Item key={prod.id}>
-              <Row>
-                <Col md={2}>
-                  <Image src={prod.img} alt={prod.name} fluid rounded />
-                </Col>
-                <Col md={2}>
-                  <span>{prod.name}</span>
-                </Col>
-                <Col md={2}>₹ {prod.newPrice}</Col>
-                <Col md={2}>
-                  <Button
-                  size="sm"
-                    variant="light"
-                    onClick={(e) => {
-                      DecreaseQty(prod.id);
-                    }}
-                  >
-                    -
-                  </Button>
-                    <b>{prod.quantity}</b>
-                  <Button
-                  size="sm"
-                    variant="light"
-                    onClick={(e) => {
-                      IncreaseQty(prod.id);
-                    }}
-                  >
-                    +
-                  </Button>
-                </Col>
-                <Col md={2}>
-                  <Button
-                    type="button"
-                    variant="light"
-                    onClick={() => {
-                      console.log("test")
-                      DeleteFromCart(prod.id)
-                    }
-                    }
-                  >
-                    <AiFillDelete fontSize="20px" />
-                  </Button>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-      </div>
-      <div className={`${styles.filters} ${styles.summary}`}>
-        <span className={styles.title}>Subtotal ({cartProducts.length}) items</span>
-        <span style={{ fontWeight: 700, fontSize: 20 }}>Total: ₹ {total}</span>
-        <Button type="button" disabled={cartProducts.length === 0}>
-          Proceed to Checkout
-        </Button>
-      </div>
-    </div>
+    <>
+      {cartProducts.length === 0 ? (
+        <Stack gap={2} className="col-sm-5 mx-auto">
+          <h2>Shopping Cart</h2>
+          <br />
+          <p>Your cart is currently empty.</p>
+          <br />
+          <div>
+            <Link to="/">Continue shopping</Link>
+          </div>
+        </Stack>
+      ) : (
+        <div className={styles.home}>
+          <div className={styles.productContainer}>
+            <h2>Shopping Cart</h2>
+            <ListGroup>
+              <ListGroup.Item>
+                <Row>
+                  <Col md={2}>
+                  </Col>
+                  <Col md={2}>
+                    <strong>Title</strong>
+                  </Col>
+                  <Col md={2}>
+                    <strong>Price</strong>
+                  </Col>
+                  <Col md={2}>
+                    <strong>Quantity</strong>
+                  </Col>
+                </Row>
+              </ListGroup.Item>
+              {cartProducts.map((prod) => (
+                <ListGroup.Item key={prod.id}>
+                  <Row className="">
+                    <Col md={2}>
+                      <Image src={prod.img} alt={prod.name} fluid rounded />
+                    </Col>
+                    <Col md={2}>
+                      <span>{prod.name}</span>
+                    </Col>
+                    <Col md={2}>₹ {prod.newPrice}</Col>
+                    <Col md={2}>
+                      <Button
+                        size="sm"
+                        variant="light"
+                        onClick={(e) => {
+                          DecreaseQty(prod.id);
+                        }}
+                      >
+                        -
+                      </Button>
+                      <b>{prod.quantity}</b>
+                      <Button
+                        size="sm"
+                        variant="light"
+                        onClick={(e) => {
+                          IncreaseQty(prod.id);
+                        }}
+                      >
+                        +
+                      </Button>
+                    </Col>
+                    <Col md={2}>
+                      <Button
+                        type="button"
+                        variant="light"
+                        onClick={() => {
+                          console.log("test")
+                          DeleteFromCart(prod.id)
+                        }
+                        }
+                      >
+                        <AiFillDelete fontSize="20px" />
+                      </Button>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+            <Button style={{height:'40px'}} onClick={() => ClearCart() }>Clear Cart</Button>
+          </div>
+          <div className={`${styles.filters} ${styles.summary}`}>
+            <span className={styles.title}>Subtotal ({cartProducts.length}) items</span>
+            <span style={{ fontWeight: 700, fontSize: 20 }}>Total: ₹ {totalPrice}</span>
+            <Button type="button" disabled={cartProducts.length === 0}>
+              Checkout
+            </Button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

@@ -3,12 +3,12 @@ export const ACTIONS = {
     INCREASE_QTY: 'INCREASE_QTY',
     DECREASE_QTY: 'DECREASE_QTY',
     DELETE_FROM_CART: 'DELETE_FROM_CART',
+    SET_TOTAL: 'SET_TOTAL',
     CLEAR_CART: 'CLEAR_CART'
 }
 
 export const intitialState = {
     cartProducts: [],
-    totalQuantity: 0,
     totalPrice: 0,
 }
 
@@ -49,8 +49,7 @@ export function CartReducer(state, { type, payload }) {
                 ...state,
                 cartProducts: state.cartProducts.map((item) =>
                     item.id === payload.id
-                        ? { ...item, quantity: item.quantity + payload.qty, 
-                            newPrice: item.newPrice * item.quantity }
+                        ? { ...item, quantity: item.quantity + payload.qty }
                         : item
                 ),
             };
@@ -59,17 +58,20 @@ export function CartReducer(state, { type, payload }) {
                 ...state,
                 cartProducts: state.cartProducts.map((item) =>
                     item.id === payload.id
-                        ? { ...item, quantity: item.quantity === 1 ? 1:  item.quantity - payload.qty, 
-                            newPrice: item.newPrice * item.quantity }
+                        ? { ...item, quantity: item.quantity === 1 ? 1 : item.quantity - payload.qty }
                         : item
                 ),
             };
-            case ACTIONS.CLEAR_CART:
-                return {
-                    ...state,
-                    cartProducts: []
-                };
-
+        case ACTIONS.SET_TOTAL:
+            return {
+                ...state,
+                totalPrice: state.cartProducts.reduce((acc, curr) => acc + Number(curr.newPrice) * curr.quantity, 0)
+            };
+        case ACTIONS.CLEAR_CART:
+            return {
+                ...state,
+                cartProducts: []
+            };
         default:
             return state
     }

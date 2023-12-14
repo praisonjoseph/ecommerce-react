@@ -23,12 +23,11 @@ export const ShowOnLogout = ({ children }) => {
 };
 
 export default function Header() {
-    const { user, logOut } = useAuth()
+    const { logOut } = useAuth()
     const navigate = useNavigate();
     const { searchTerm, FilterSearchTerm } = useFilter()
     const { cartProducts } = useCart()
     console.log(cartProducts)
-    console.log(searchTerm)
 
     const logoutUser = async () => {
         try {
