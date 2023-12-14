@@ -26,10 +26,14 @@ function Product({product}) {
             <Card.Body>
                 <Card.Title>{product.title}</Card.Title>
                 <Card.Text>
-                    Some quick example text to build on the card title and make up the
+                Some quick example text to build on the card title and make up the
                     bulk of the card's content.
                 </Card.Text>
-                <Button variant="primary" onClick={AddToCartHandler}>Add to Cart</Button>
+                <Card.Text className="d-flex justify-content-between align-items-center">
+                    <strong>{`$${product.newPrice}`}</strong>
+                    <Button variant="dark" onClick={AddToCartHandler}>Add</Button>
+                </Card.Text>
+                
             </Card.Body>
         </Card>
     )

@@ -24,13 +24,10 @@ const Cart = () => {
     <>
       {cartProducts.length === 0 ? (
         <Stack gap={2} className="col-sm-5 mx-auto">
-          <h2>Shopping Cart</h2>
           <br />
-          <p>Your cart is currently empty.</p>
+          <h2>Your cart is empty!</h2>
           <br />
-          <div>
-            <Link to="/">Continue shopping</Link>
-          </div>
+          <Button variant="dark" as={Link} to="/">Continue shopping</Button>
         </Stack>
       ) : (
         <div className={styles.home}>
@@ -88,7 +85,6 @@ const Cart = () => {
                         type="button"
                         variant="light"
                         onClick={() => {
-                          console.log("test")
                           DeleteFromCart(prod.id)
                         }
                         }
@@ -100,13 +96,13 @@ const Cart = () => {
                 </ListGroup.Item>
               ))}
             </ListGroup>
-            <Button style={{height:'40px'}} onClick={() => ClearCart() }>Clear Cart</Button>
+            <Button variant="dark" style={{ height: '40px' }} onClick={() => ClearCart()}>Clear Cart</Button>
           </div>
           <div className={`${styles.filters} ${styles.summary}`}>
             <span className={styles.title}>Subtotal ({cartProducts.length}) items</span>
             <span style={{ fontWeight: 700, fontSize: 20 }}>Total: ₹ {totalPrice}</span>
-            <Button type="button" disabled={cartProducts.length === 0}>
-              Checkout
+            <Button variant="light" disabled={cartProducts.length === 0}>
+              Purchase
             </Button>
           </div>
         </div>

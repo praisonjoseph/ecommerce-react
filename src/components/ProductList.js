@@ -11,7 +11,6 @@ function ProductList() {
     searchTerm, 
     FilterBySearch, 
   } = useFilter()
-  console.log(products, searchTerm)
 
   useEffect(() => {
     FilterBySearch(products, searchTerm)

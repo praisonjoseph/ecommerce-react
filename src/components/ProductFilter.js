@@ -12,7 +12,7 @@ function ProductFilter() {
         FilterByColor,
         ClearFilter
     } = useFilter()
-    const [price, setPrice] = useState(500)
+    const [price, setPrice] = useState(300)
     const [selectedCompany, setSelectedCompany] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
@@ -32,7 +32,7 @@ function ProductFilter() {
     ];
     const handleClearFilter = () => {
         // Reset all dropdowns to their default values
-        setPrice(500);
+        setPrice(300);
         setSelectedCompany('');
         setSelectedCategory('');
         setSelectedColor('');
@@ -48,10 +48,11 @@ function ProductFilter() {
             <Card.Body>
                 <Card.Title>Filter</Card.Title>
                 <Card.Text>
-                    <Form.Label>Price: {price}</Form.Label>
+                    <Form.Label>Price: {`$${price}`}</Form.Label>
                     <Form.Range
-                        min={40}
-                        max={500}
+                        min={50}
+                        max={300}
+                        step={5}
                         value={price}
                         onChange={
                             (event) => {
@@ -101,7 +102,7 @@ function ProductFilter() {
                         ))}
                     </Form.Select>
                 </Card.Text>
-                <Button variant="primary"
+                <Button variant="dark"
                     onClick={handleClearFilter}
                 >
                     Clear Filter
