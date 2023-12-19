@@ -1,11 +1,18 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Button, Col, Image, ListGroup, Row, Stack } from "react-bootstrap";
 import { AiFillDelete } from "react-icons/ai";
 import { useCart } from '../contexts/CartContext'
 import styles from './Cart.module.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useOrders } from "../contexts/OrderContext";
+import { useAuth } from "../contexts/AuthContext";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { toast } from "react-toastify";
+import { ACTIONS } from "../reducers/orderReducer";
+import { db } from "../firebase";
 
 const Cart = () => {
+  console.log("Cart is rendering")
   const {
     cartProducts,
     totalPrice,
@@ -16,9 +23,39 @@ const Cart = () => {
     ClearCart,
   } = useCart()
 
+  const { 
+    orders, 
+    // dispatch,
+    addOrder 
+  } = useOrders();
+  const {user} = useAuth()
+  const navigate = useNavigate();
+
   useEffect(() => {
     SetTotal()
   }, [cartProducts, SetTotal]);
+
+  const handlePurchase = async() => {
+    // Assuming cartProducts contain details for the order
+    const today = new Date();
+    const date = today.toDateString();
+    const time = today.toLocaleTimeString();
+
+    const orderDetails = {
+      // Extract details from cartProducts
+      userID: user.uid,
+      userEmail: user.email,
+      orderDate: date,
+      orderTime: time,
+      orderAmount: totalPrice,
+      cartProducts,
+      createdAt: Timestamp.now().toDate()
+    };
+    // // Add order to the order context
+    await addOrder(orderDetails);
+    ClearCart();
+    navigate("/orders")
+  };
 
   return (
     <>
@@ -58,7 +95,7 @@ const Cart = () => {
                     <Col md={2}>
                       <span>{prod.name}</span>
                     </Col>
-                    <Col md={2}>₹ {prod.newPrice}</Col>
+                    <Col md={2}>${prod.newPrice}</Col>
                     <Col md={2}>
                       <Button
                         size="sm"
@@ -100,10 +137,9 @@ const Cart = () => {
           </div>
           <div className={`${styles.filters} ${styles.summary}`}>
             <span className={styles.title}>Subtotal ({cartProducts.length}) items</span>
-            <span style={{ fontWeight: 700, fontSize: 20 }}>Total: ₹ {totalPrice}</span>
-            <Button variant="light" disabled={cartProducts.length === 0}>
-              Purchase
-            </Button>
+            <span style={{ fontWeight: 700, fontSize: 20 }}>Total: ${totalPrice}</span>
+            <Button variant="light" onClick={() => handlePurchase()}>Purchase</Button>
+            <Button variant="light" className="mt-2" as={Link} to="/">Continue shopping</Button>
           </div>
         </div>
       )}

@@ -33,10 +33,8 @@ export default function Header() {
         try {
             await logOut()
             toast.success("Logout successful.");
-            console.log("Logout successful.")
             navigate("/login");
         } catch (error) {
-            console.log(error.message)
             toast.error(error.message);
         }
 

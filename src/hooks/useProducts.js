@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { db } from '../firebase'
-import { collection, orderBy, query,onSnapshot, } from 'firebase/firestore'
+import { collection, query,onSnapshot, } from 'firebase/firestore'
 import { toast } from 'react-toastify'
 
 function useProducts() {
     const [products, setProducts] = useState([])
-    const [IsLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         const getCollection = () => {
@@ -32,7 +32,7 @@ function useProducts() {
 
     }, [])
 
-    return {IsLoading, products}
+    return {isLoading, products}
 }
 
 export default useProducts

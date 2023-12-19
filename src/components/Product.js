@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { Button, Card } from 'react-bootstrap'
 import { useCart } from '../contexts/CartContext'
 
+
 function Product({product}) {
     const {AddToCart} = useCart()
 
@@ -12,6 +13,7 @@ function Product({product}) {
             name: product.title,
             newPrice: product.newPrice,
         })
+        
     },[AddToCart, product])
 
     return (

@@ -16,12 +16,17 @@ export function useAuth() {
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    // Initially the value of user will be null, so if properties of the object anywhere in the child 
+    // component is accessed it will throw an error, to avoid that we dont mount child components
+    // until the user is set in onAuthstatechanged.
+    const [loading, setLoading] = useState(true);
 
     // Effect to observe the authentication state
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth,
             (authUser) => {
                 setUser(authUser);
+                setLoading(false)
             });
 
         // Cleanup function to unsubscribe when the component unmounts
@@ -48,7 +53,7 @@ const AuthProvider = ({ children }) => {
         logOut,
     }
     return <AuthContext.Provider value={value}>
-        {children}
+        {!loading && children}
     </AuthContext.Provider>
 }
 

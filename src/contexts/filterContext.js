@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useCallback, useContext, useReducer } from 'react';
 import { ACTIONS, FilterReducer, intitialState } from '../reducers/filterReducer';
 
 
@@ -52,7 +52,7 @@ const FilterProvider = ({ children }) => {
         });
       };
 
-      const FilterBySearch = (products, searchTerm) => {
+      const FilterBySearch = useCallback((products, searchTerm) => {
         dispatch({
           type: ACTIONS.FILTER_BY_SEARCH,
           payload: {
@@ -60,7 +60,7 @@ const FilterProvider = ({ children }) => {
             searchTerm,
         }
         });
-      };
+      },[dispatch])
 
       const FilterSearchTerm = (event) => {
         dispatch({
@@ -69,7 +69,7 @@ const FilterProvider = ({ children }) => {
             event
         }
         });
-      };
+      }
 
       const ClearFilter = (products) => {
         dispatch({

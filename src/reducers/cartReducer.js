@@ -1,3 +1,5 @@
+import {toast} from 'react-toastify'
+
 export const ACTIONS = {
     ADD_TO_CART: 'ADD_TO_CART',
     INCREASE_QTY: 'INCREASE_QTY',
@@ -20,6 +22,7 @@ export function CartReducer(state, { type, payload }) {
             )
             if (existingProductIndex >= 0) {
                 // If the product is already in the cart, update the quantity or any other property
+                // toast.success("Updated quantity by 1")
                 return {
                     ...state,
                     cartProducts: state.cartProducts.map((item, index) =>
@@ -30,6 +33,8 @@ export function CartReducer(state, { type, payload }) {
                 };
             } else {
                 // If the product is not in the cart, add it
+                // console.log("inside add cart")
+                // toast.success("Product added to Cart")
                 return {
                     ...state,
                     cartProducts: [...state.cartProducts, { ...payload, quantity: 1 }],

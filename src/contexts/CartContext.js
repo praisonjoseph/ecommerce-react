@@ -31,26 +31,23 @@ const CartProvider = ({ children }) => {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(state.cartProducts));
     }, [state.cartProducts]);
 
-    const AddToCart = useCallback((newItem) => {
-      console.log('AddToCart')
+    const AddToCart = (newItem) => {
         dispatch({
           type: ACTIONS.ADD_TO_CART,
           payload: newItem,
         });
-      },[dispatch])
+      }
 
-      const DeleteFromCart = useCallback((id) => {
-        console.log('DeleteFromCart')
+      const DeleteFromCart = (id) => {
         dispatch({
           type: ACTIONS.DELETE_FROM_CART,
           payload: {
             id
         }
         });
-      },[dispatch])
+      }
 
-      const IncreaseQty = useCallback((id, qty=1) => {
-        console.log('IncreaseQty')
+      const IncreaseQty = (id, qty=1) => {
         dispatch({
           type: ACTIONS.INCREASE_QTY,
           payload: {
@@ -58,10 +55,9 @@ const CartProvider = ({ children }) => {
             qty
         }
         });
-      },[dispatch])
+      }
 
-      const DecreaseQty = useCallback((id, qty=1) => {
-        console.log('DecreaseQty')
+      const DecreaseQty = (id, qty=1) => {
         dispatch({
           type: ACTIONS.DECREASE_QTY,
           payload: {
@@ -69,39 +65,38 @@ const CartProvider = ({ children }) => {
             qty
         }
         });
-      },[dispatch])
+      }
+
       const SetTotal = useCallback(() => {
-        console.log('SetTotal')
         dispatch({
           type: ACTIONS.SET_TOTAL,
         });
-      },[dispatch])
+      }, [dispatch])
 
-      const ClearCart = useCallback(() => {
-        console.log('ClearCart')
+      const ClearCart = () => {
         dispatch({
           type: ACTIONS.CLEAR_CART,
         });
-      },[dispatch])
+      }
 
-    // const value = {
-    //     ...state,
-    //     AddToCart,
-    //     DeleteFromCart,
-    //     IncreaseQty,
-    //     DecreaseQty,
-    //     SetTotal,
-    //     ClearCart,
-    // }
-    const value = useMemo(() => ({
-      ...state,
-      AddToCart,
-      DeleteFromCart,
-      IncreaseQty,
-      DecreaseQty,
-      SetTotal,
-      ClearCart,
-    }), [state, AddToCart, DeleteFromCart, IncreaseQty, DecreaseQty, SetTotal, ClearCart]);
+    const value = {
+        ...state,
+        AddToCart,
+        DeleteFromCart,
+        IncreaseQty,
+        DecreaseQty,
+        SetTotal,
+        ClearCart,
+    }
+    // const value = useMemo(() => ({
+    //   ...state,
+    //   AddToCart,
+    //   DeleteFromCart,
+    //   IncreaseQty,
+    //   DecreaseQty,
+    //   SetTotal,
+    //   ClearCart,
+    // }), [state, AddToCart, DeleteFromCart, IncreaseQty, DecreaseQty, SetTotal, ClearCart]);
   
     return (
         <CartContext.Provider value={value}>
