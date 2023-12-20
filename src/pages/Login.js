@@ -1,16 +1,18 @@
-import React, { useRef, useState} from 'react'
+import React, { useRef, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import CenteredContainer from '../components/CenteredContainer'
 import { useAuth } from '../contexts/AuthContext'
 import { toast } from "react-toastify";
+import { useCart } from '../contexts/CartContext'
 
 function Login() {
-    const {signIn} = useAuth()
+    const { signIn } = useAuth()
     const navigate = useNavigate();
     const emailRef = useRef()
     const passwordRef = useRef()
     const [loading, setLoading] = useState(false)
+    const { cartProducts } = useCart()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -18,6 +20,10 @@ function Login() {
             setLoading(true)
             await signIn(emailRef.current.value, passwordRef.current.value)
             toast.success("Login successful.");
+            if (cartProducts.length > 0) {
+                navigate("/cart")
+                return
+            }
             navigate("/")
         } catch (error) {
             console.log(error.message)

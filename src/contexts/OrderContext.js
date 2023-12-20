@@ -14,34 +14,34 @@ export function useOrders() {
 const OrderProvider = ({ children }) => {
 
     const [state, dispatch] = useReducer(OrderReducer, intitialState)
-    const {user} = useAuth()
-    console.log(user.email)
-    
+    const { user } = useAuth()
+    console.log(user)
+    console.log("OrderProvider component called")
 
     useEffect(() => {
-        const getCollection = async () => {
-            setIsLoading(true);
-            try {
-                const docRef = collection(db, "orders");
-                // const q = query(docRef, orderBy("createdAt", "desc"));
-                // console.log(user.uid)
-                // const q = query(docRef)
-                console.log("OrdersContext is getting mounted")
-                const q = query(docRef, where("userID", "==", user.uid))
-                const querySnapshot = await getDocs(q);
-                const data = [];
-                querySnapshot.forEach((doc) => {
-                    data.push({ id: doc.id, ...doc.data() });
-                });
-                setOrders(data);
-                setIsLoading(false);
-            } catch (error) {
-                setIsLoading(false);
-                toast.error(error.message);
+        if (user) {
+            const getCollection = async () => {
+                setIsLoading(true);
+                try {
+                    const docRef = collection(db, "orders");
+                    // const q = query(docRef, orderBy("createdAt", "desc"));
+                    console.log("OrderProvider useEffect called", user.uid)
+                    // const q = query(docRef)
+                    const q = query(docRef, where("userID", "==", user.uid))
+                    const querySnapshot = await getDocs(q);
+                    const data = [];
+                    querySnapshot.forEach((doc) => {
+                        data.push({ id: doc.id, ...doc.data() });
+                    });
+                    setOrders(data);
+                    setIsLoading(false);
+                } catch (error) {
+                    setIsLoading(false);
+                    toast.error(error.message);
+                }
             }
+            getCollection()
         }
-        return () => getCollection()
-
     }, [user])
 
 
@@ -77,6 +77,7 @@ const OrderProvider = ({ children }) => {
         addOrder,
         dispatch,
     }
+
     return (
         <OrderContext.Provider value={value}>
             {children}

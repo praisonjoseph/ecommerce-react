@@ -6,13 +6,10 @@ import styles from './Cart.module.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useOrders } from "../contexts/OrderContext";
 import { useAuth } from "../contexts/AuthContext";
-import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
-import { ACTIONS } from "../reducers/orderReducer";
-import { db } from "../firebase";
 
 const Cart = () => {
-  console.log("Cart is rendering")
   const {
     cartProducts,
     totalPrice,
@@ -24,10 +21,9 @@ const Cart = () => {
   } = useCart()
 
   const { 
-    orders, 
-    // dispatch,
     addOrder 
   } = useOrders();
+
   const {user} = useAuth()
   const navigate = useNavigate();
 
@@ -37,6 +33,10 @@ const Cart = () => {
 
   const handlePurchase = async() => {
     // Assuming cartProducts contain details for the order
+    if (!user) {
+      navigate("/login")
+      return
+    }
     const today = new Date();
     const date = today.toDateString();
     const time = today.toLocaleTimeString();
