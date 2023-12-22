@@ -1,5 +1,4 @@
 # Buy Busy 
-
 Full Stack React Ecommerce created with React and Firebase.
 
 ## 🖥️ Tech Stack
@@ -7,6 +6,7 @@ Full Stack React Ecommerce created with React and Firebase.
 ![reactjs](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)&nbsp;
 ![react-router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)&nbsp;
 ![firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white)&nbsp;
+
 
 
 ## 🚀 Features
@@ -30,7 +30,9 @@ Full Stack React Ecommerce created with React and Firebase.
 
 ## Getting started
 
+
 ### 1. Clone the repo
+
 
 ```sh
 $ git clone https://github.com/praisonjoseph/ecommerce-react.git
@@ -57,8 +59,9 @@ $ cd ecommerce-react/
 
 - In the Firebase Console, navigate to "Firestore" and create a new Firestore database for your project. Set up the rules and indexes as needed.
 
-
 ### 3. Set Up Environmental Variables
 
 - Rename `.env.sample` to `.env.local`
 - Add Firebase configuration to `.env.local`
+- Rename `service_account_sample.json` to `ecommerce-ed610.json`
+- Add Firebase service account configuration details to `ecommerce-ed610.json`
