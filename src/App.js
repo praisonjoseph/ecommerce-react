@@ -7,7 +7,7 @@ import Orders from "./pages/Orders";
 import Cart from "./pages/Cart";
 import Header from "./components/Header";
 import FilterProvider from "./contexts/filterContext";
-import CartProvider from './contexts/CartContext';
+// import CartProvider from './contexts/CartContext';
 import OrderProvider from './contexts/OrderContext';
 import { useAuth } from './contexts/AuthContext';
 
@@ -18,7 +18,7 @@ function App() {
     <div>
       <BrowserRouter>
         <FilterProvider>
-          <CartProvider>
+          {/* <CartProvider> */}
             <OrderProvider>
               <Header />
               <ToastContainer />
@@ -34,7 +34,7 @@ function App() {
                 <Route path="/cart" element={<Cart />} />
               </Routes>
             </OrderProvider>
-          </CartProvider>
+          {/* </CartProvider> */}
         </FilterProvider>
       </BrowserRouter>
     </div>

@@ -1,20 +1,24 @@
 import React, { useCallback } from 'react'
 import { Button, Card } from 'react-bootstrap'
-import { useCart } from '../contexts/CartContext'
-
+// import { useCart } from '../contexts/CartContext'
+import { 
+    addProductToCart,
+   } from "../reducers/cartReducer";
+import { useDispatch } from 'react-redux';
 
 function Product({product}) {
-    const {AddToCart} = useCart()
+    // const {AddToCart} = useCart()
+    const dispatch = useDispatch()
 
-    const AddToCartHandler = useCallback(() => {
-        AddToCart({
+    const AddToCartHandler = () => {
+        dispatch(addProductToCart({
             id: product.id,
             img: product.img,
             name: product.title,
             newPrice: product.newPrice,
-        })
+        }))
         
-    },[AddToCart, product])
+    }
 
     return (
         <Card className='d-flex flex-column shadow mb-5 bg-white rounded'>

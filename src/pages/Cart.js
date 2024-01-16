@@ -1,25 +1,34 @@
 import React, { useEffect } from "react";
 import { Button, Col, Image, ListGroup, Row, Stack } from "react-bootstrap";
 import { AiFillDelete } from "react-icons/ai";
-import { useCart } from '../contexts/CartContext'
+// import { useCart } from '../contexts/CartContext'
 import styles from './Cart.module.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useOrders } from "../contexts/OrderContext";
 import { useAuth } from "../contexts/AuthContext";
 import { Timestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { 
+  removeProductFromCart,
+  clearCart,
+  increaseQuantity,
+  decreaseQuantity,
+ } from "../reducers/cartReducer";
+import { cartSelector } from "../reducers/cartReducer";
+import { useSelector, useDispatch } from 'react-redux';
 
 const Cart = () => {
-  const {
-    cartProducts,
-    totalPrice,
-    IncreaseQty,
-    DecreaseQty,
-    DeleteFromCart,
-    SetTotal,
-    ClearCart,
-  } = useCart()
-
+  // const {
+  //   cartProducts,
+  //   totalPrice,
+  //   IncreaseQty,
+  //   DecreaseQty,
+  //   DeleteFromCart,
+  //   SetTotal,
+  //   ClearCart,
+  // } = useCart()
+  const {cartProducts, totalPrice} = useSelector(cartSelector)
+  const dispatch = useDispatch()
   const { 
     addOrder 
   } = useOrders();
@@ -27,9 +36,9 @@ const Cart = () => {
   const {user} = useAuth()
   const navigate = useNavigate();
 
-  useEffect(() => {
-    SetTotal()
-  }, [cartProducts, SetTotal]);
+  // useEffect(() => {
+  //   SetTotal()
+  // }, [cartProducts, SetTotal]);
 
   const handlePurchase = async() => {
     // Assuming cartProducts contain details for the order
@@ -53,7 +62,8 @@ const Cart = () => {
     };
     // // Add order to the order context
     await addOrder(orderDetails);
-    ClearCart();
+    // ClearCart();
+    dispatch(clearCart())
     navigate("/orders")
   };
 
@@ -101,7 +111,7 @@ const Cart = () => {
                         size="sm"
                         variant="light"
                         onClick={(e) => {
-                          DecreaseQty(prod.id);
+                          dispatch(decreaseQuantity(prod.id));
                         }}
                       >
                         -
@@ -111,7 +121,7 @@ const Cart = () => {
                         size="sm"
                         variant="light"
                         onClick={(e) => {
-                          IncreaseQty(prod.id);
+                          dispatch(increaseQuantity(prod.id));
                         }}
                       >
                         +
@@ -122,7 +132,7 @@ const Cart = () => {
                         type="button"
                         variant="light"
                         onClick={() => {
-                          DeleteFromCart(prod.id)
+                          dispatch(removeProductFromCart(prod.id))
                         }
                         }
                       >
@@ -133,7 +143,7 @@ const Cart = () => {
                 </ListGroup.Item>
               ))}
             </ListGroup>
-            <Button variant="dark" style={{ height: '40px' }} onClick={() => ClearCart()}>Clear Cart</Button>
+            <Button variant="dark" style={{ height: '40px' }} onClick={() => dispatch(clearCart())}>Clear Cart</Button>
           </div>
           <div className={`${styles.filters} ${styles.summary}`}>
             <span className={styles.title}>Subtotal ({cartProducts.length}) items</span>

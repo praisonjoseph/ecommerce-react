@@ -4,7 +4,9 @@ import { useAuth } from "../contexts/AuthContext";
 import { FaShoppingCart, FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useFilter } from '../contexts/filterContext';
-import { useCart } from '../contexts/CartContext';
+// import { useCart } from '../contexts/CartContext';
+import { cartSelector } from "../reducers/cartReducer";
+import { useSelector } from 'react-redux';
 
 export const ShowOnLogin = ({ children }) => {
     const { user } = useAuth()
@@ -26,7 +28,8 @@ export default function Header() {
     const { logOut } = useAuth()
     const navigate = useNavigate();
     const { searchTerm, FilterSearchTerm } = useFilter()
-    const { cartProducts } = useCart()
+    const {cartProducts} = useSelector(cartSelector)
+    // const { cartProducts } = useCart()
     console.log(cartProducts)
 
     const logoutUser = async () => {
