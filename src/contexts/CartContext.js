@@ -10,7 +10,6 @@
 
 // const CartProvider = ({ children }) => {
 //     const [state, dispatch] = useReducer(CartReducer, intitialState)
-
 //     useEffect(() => {
 //       // Load cart state from localStorage on component mount
 //       const storedCart = localStorage.getItem(CART_STORAGE_KEY);

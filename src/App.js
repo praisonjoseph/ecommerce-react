@@ -6,7 +6,7 @@ import Signup from "./pages/Signup";
 import Orders from "./pages/Orders";
 import Cart from "./pages/Cart";
 import Header from "./components/Header";
-import FilterProvider from "./contexts/filterContext";
+// import FilterProvider from "./contexts/filterContext";
 // import CartProvider from './contexts/CartContext';
 import OrderProvider from './contexts/OrderContext';
 import { useAuth } from './contexts/AuthContext';
@@ -17,7 +17,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <FilterProvider>
+        {/* <FilterProvider> */}
           {/* <CartProvider> */}
             <OrderProvider>
               <Header />
@@ -35,7 +35,7 @@ function App() {
               </Routes>
             </OrderProvider>
           {/* </CartProvider> */}
-        </FilterProvider>
+        {/* </FilterProvider> */}
       </BrowserRouter>
     </div>
   );

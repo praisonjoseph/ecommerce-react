@@ -3,19 +3,25 @@ import Product from './Product'
 import { Col, Container, Row, Spinner } from 'react-bootstrap'
 import useProducts from '../hooks/useProducts'
 import { useFilter } from '../contexts/filterContext'
+import {
+  filterBySearch,
+  filterSelector,
+} from '../reducers/filterReducer'
+import { useDispatch, useSelector } from 'react-redux'
 
 function ProductList() {
   const { isLoading, products } = useProducts()
-  
-  const {
-    filteredProducts,
-    searchTerm,
-    FilterBySearch,
-  } = useFilter()
+  const dispatch = useDispatch()
+  // const {
+  //   filteredProducts,
+  //   searchTerm,
+  //   FilterBySearch,
+  // } = useFilter()
+  const {filteredProducts, searchTerm} = useSelector(filterSelector)
 
   useEffect(() => {
-    FilterBySearch(products, searchTerm)
-  }, [products, searchTerm, FilterBySearch])
+    dispatch(filterBySearch({products, searchTerm}))
+  }, [products, searchTerm])
 
   return (
     <>

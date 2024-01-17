@@ -1,17 +1,27 @@
 import React, { useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
-import { useFilter } from '../contexts/filterContext'
+// import { useFilter } from '../contexts/filterContext'
 import useProducts from '../hooks/useProducts'
+import {
+    filterByCategory,
+    filterByCompany,
+    filterByColor,
+    filterByPrice,
+    clearFilter,
+} from '../reducers/filterReducer'
+import { useDispatch } from 'react-redux'
 
 function ProductFilter() {
     const { products, isLoading } = useProducts()
-    const {
-        FilterByPrice,
-        FilterByCategory,
-        FilterByCompany,
-        FilterByColor,
-        ClearFilter
-    } = useFilter()
+    // const {
+    //     FilterByPrice,
+    //     FilterByCategory,
+    //     FilterByCompany,
+    //     FilterByColor,
+    //     ClearFilter
+    // } = useFilter()
+    const dispatch = useDispatch()
+
     const [price, setPrice] = useState(300)
     const [selectedCompany, setSelectedCompany] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
@@ -37,7 +47,7 @@ function ProductFilter() {
         setSelectedCategory('');
         setSelectedColor('');
         // Call ClearFilter with the original product list
-        ClearFilter(products);
+        dispatch(clearFilter({products}));
     };
 
     return (
@@ -57,7 +67,7 @@ function ProductFilter() {
                         onChange={
                             (event) => {
                                 setPrice(event.target.value);
-                                FilterByPrice(products, event.target.value);
+                                dispatch(filterByPrice({products, price: event.target.value}));
                             }
                         }
                     />
@@ -65,7 +75,7 @@ function ProductFilter() {
                     <Form.Select aria-label="Default select example"
                         onChange={(event) => {
                             setSelectedCompany(event.target.value);
-                            FilterByCompany(products, event.target.value);
+                            dispatch(filterByCompany({products, company: event.target.value}));
                         }
                         }
                         value={selectedCompany}
@@ -78,7 +88,7 @@ function ProductFilter() {
                     <Form.Select aria-label="Default select example"
                         onChange={(event) => {
                             setSelectedCategory(event.target.value);
-                            FilterByCategory(products, event.target.value);
+                            dispatch(filterByCategory({products, category: event.target.value}));
                         }
                         }
                         value={selectedCategory}
@@ -91,7 +101,7 @@ function ProductFilter() {
                     <Form.Select aria-label="Default select example"
                         onChange={(event) => {
                             setSelectedColor(event.target.value);
-                            FilterByColor(products, event.target.value);
+                            dispatch(filterByColor({products, color: event.target.value}));
                         }
                         }
                         value={selectedColor}

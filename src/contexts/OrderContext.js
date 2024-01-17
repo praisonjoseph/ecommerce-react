@@ -16,7 +16,6 @@ const OrderProvider = ({ children }) => {
     const [state, dispatch] = useReducer(OrderReducer, intitialState)
     const { user } = useAuth()
     console.log(user)
-    console.log("OrderProvider component called")
 
     useEffect(() => {
         if (user) {
@@ -25,7 +24,6 @@ const OrderProvider = ({ children }) => {
                 try {
                     const docRef = collection(db, "orders");
                     // const q = query(docRef, orderBy("createdAt", "desc"));
-                    console.log("OrderProvider useEffect called", user.uid)
                     // const q = query(docRef)
                     const q = query(docRef, where("userID", "==", user.uid))
                     const querySnapshot = await getDocs(q);

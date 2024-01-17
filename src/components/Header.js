@@ -3,10 +3,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from "../contexts/AuthContext";
 import { FaShoppingCart, FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { useFilter } from '../contexts/filterContext';
+// import { useFilter } from '../contexts/filterContext';
 // import { useCart } from '../contexts/CartContext';
 import { cartSelector } from "../reducers/cartReducer";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    filterSearchTerm,
+    filterSelector,
+  } from '../reducers/filterReducer'
 
 export const ShowOnLogin = ({ children }) => {
     const { user } = useAuth()
@@ -27,10 +31,12 @@ export const ShowOnLogout = ({ children }) => {
 export default function Header() {
     const { logOut } = useAuth()
     const navigate = useNavigate();
-    const { searchTerm, FilterSearchTerm } = useFilter()
+    // const { searchTerm, FilterSearchTerm } = useFilter()
     const {cartProducts} = useSelector(cartSelector)
     // const { cartProducts } = useCart()
     console.log(cartProducts)
+    const dispatch = useDispatch()
+    const {searchTerm} = useSelector(filterSelector)
 
     const logoutUser = async () => {
         try {
@@ -64,7 +70,7 @@ export default function Header() {
                             className="me-2"
                             aria-label="Search"
                             value={searchTerm}
-                            onChange={(event) => { FilterSearchTerm(event) }}
+                            onChange={(event) => {dispatch(filterSearchTerm(event)) }}
                         />
                         <Button variant="outline-success"><FaSearch /></Button>
                     </Form>

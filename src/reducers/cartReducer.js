@@ -20,7 +20,6 @@ const cartSlice = createSlice({
         // If product is not in the cart, add it
         state.cartProducts.push({ ...product, quantity: 1 });
       }
-
       // Update total price
       state.totalPrice += Number(product.newPrice);
     },
@@ -75,7 +74,7 @@ export const {
 } = cartSlice.actions;
 
 export const cartReducer = cartSlice.reducer;
-export const cartSelector = (state) => state.cartReducer;
+export const cartSelector = (state) => state.cart;
 
 
 
