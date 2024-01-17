@@ -16,7 +16,8 @@ import {
  } from "../reducers/cartReducer";
 import { cartSelector } from "../reducers/cartReducer";
 import { useSelector, useDispatch } from 'react-redux';
-import { addOrder } from "../reducers/orderReducer";
+import { addOrderAsync } from "../reducers/orderReducer";
+// import { addOrder } from "../reducers/orderReducer";
 
 const Cart = () => {
   // const {
@@ -59,11 +60,11 @@ const Cart = () => {
       orderTime: time,
       orderAmount: totalPrice,
       cartProducts,
-      createdAt: Timestamp.now().toDate()
+      createdAt: today.toDateString() + " " + today.toLocaleTimeString()
     };
     // // Add order to the order context
     // await addOrder(orderDetails);
-    dispatch(addOrder(orderDetails))
+    dispatch(addOrderAsync(orderDetails))
     // ClearCart();
     dispatch(clearCart())
     navigate("/orders")

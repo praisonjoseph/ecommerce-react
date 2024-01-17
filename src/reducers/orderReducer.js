@@ -10,7 +10,7 @@ export const fetchOrdersAsync = createAsyncThunk(
         try {
             //   const { user } = ThunkApi.getState().auth; // Assuming you have an auth slice in your Redux store
             // const { user } = useAuth()
-            // console.log(user)
+            console.log("fetchOrdersAsync is getting called")
             const docRef = collection(db, "orders");
             const q = query(docRef)
             //   const q = query(docRef, where("userID", "==", user.uid));
@@ -26,30 +26,18 @@ export const fetchOrdersAsync = createAsyncThunk(
     }
 );
 
-export const addCommentAsync = createAsyncThunk("comments/addcomment",
-    async (payload) => {
-        console.log(payload)
-        await addDoc(collection(db, "orders"), payload)
-            .then((docRef) => {
-                dispatch({
-                    type: ACTIONS.ADD_ORDER,
-                    payload: { id: docRef.id, ...order }
-                });
-            })
-        const response = await fetch(
-            "https://jsonplaceholde.typicode.com/comments", {
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify({
-                payload
-            })
+export const addOrderAsync = createAsyncThunk(
+    "order/addOrder",
+    async (orderData, Thunkapi) => {
+        try {
+            console.log("addOrderAsync is getting called")
+            const docRef = await addDoc(collection(db, "orders"), orderData);
+            return { id: docRef.id, ...orderData };
+        } catch (error) {
+            return Thunkapi.rejectWithValue(error.message);
         }
-        );
-        return response.json();
     }
-)
+);
 
 const initialState = {
     orders: [],
@@ -61,9 +49,9 @@ const orderSlice = createSlice({
     name: "order",
     initialState,
     reducers: {
-        addOrder: (state, action) => {
-            state.orders.push(action.payload);
-        },
+        // addOrder: (state, action) => {
+        //     state.orders.push(action.payload);
+        // },
     },
     extraReducers: (builder) => {
         builder
@@ -78,6 +66,27 @@ const orderSlice = createSlice({
                 state.isLoading = false;
                 state.error = "Error fetching orders"
                 console.error("Error fetching orders:", action.payload);
+            })
+            .addCase(addOrderAsync.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(addOrderAsync.fulfilled, (state, action) => {
+                state.isLoading = false;
+                // state.orders.push(action.payload);
+                // Check if the new order already exists in the orders array
+                const isNewOrder = state.orders.every(
+                    (order) => order.id !== action.payload.id
+                );
+
+                // Add the new order only if it doesn't exist in the array
+                if (isNewOrder) {
+                    state.orders.push(action.payload);
+                }
+            })
+            .addCase(addOrderAsync.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = "Error adding order"
+                console.error("Error adding order:", action.payload);
             });
     },
 });

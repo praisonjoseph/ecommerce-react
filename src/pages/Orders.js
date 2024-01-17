@@ -9,10 +9,11 @@ function Orders() {
   // const { orders, isLoading } = useOrders();
   const { orders, isLoading, error } = useSelector(orderSelector)
   const dispatch = useDispatch()
-
+  console.log("Orders component is called")
   useEffect(() => {
+    console.log("Orders component useEffect is called")
     dispatch(fetchOrdersAsync())
-  }, [dispatch])
+  }, [])
 
   return (
     <Container className="mt-3">
