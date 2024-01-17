@@ -4,7 +4,7 @@ import { AiFillDelete } from "react-icons/ai";
 // import { useCart } from '../contexts/CartContext'
 import styles from './Cart.module.css'
 import { Link, useNavigate } from "react-router-dom";
-import { useOrders } from "../contexts/OrderContext";
+// import { useOrders } from "../contexts/OrderContext";
 import { useAuth } from "../contexts/AuthContext";
 import { Timestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
@@ -16,6 +16,7 @@ import {
  } from "../reducers/cartReducer";
 import { cartSelector } from "../reducers/cartReducer";
 import { useSelector, useDispatch } from 'react-redux';
+import { addOrder } from "../reducers/orderReducer";
 
 const Cart = () => {
   // const {
@@ -29,9 +30,9 @@ const Cart = () => {
   // } = useCart()
   const {cartProducts, totalPrice} = useSelector(cartSelector)
   const dispatch = useDispatch()
-  const { 
-    addOrder 
-  } = useOrders();
+  // const { 
+  //   addOrder 
+  // } = useOrders();
 
   const {user} = useAuth()
   const navigate = useNavigate();
@@ -61,7 +62,8 @@ const Cart = () => {
       createdAt: Timestamp.now().toDate()
     };
     // // Add order to the order context
-    await addOrder(orderDetails);
+    // await addOrder(orderDetails);
+    dispatch(addOrder(orderDetails))
     // ClearCart();
     dispatch(clearCart())
     navigate("/orders")
