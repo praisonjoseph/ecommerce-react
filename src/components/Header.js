@@ -11,6 +11,7 @@ import {
     filterSearchTerm,
     filterSelector,
   } from '../reducers/filterReducer'
+import { logOutAsync } from '../reducers/authReducer';
 
 export const ShowOnLogin = ({ children }) => {
     const { user } = useAuth()
@@ -29,18 +30,15 @@ export const ShowOnLogout = ({ children }) => {
 };
 
 export default function Header() {
-    const { logOut } = useAuth()
+    // const { logOut } = useAuth()
     const navigate = useNavigate();
-    // const { searchTerm, FilterSearchTerm } = useFilter()
     const {cartProducts} = useSelector(cartSelector)
-    // const { cartProducts } = useCart()
-    console.log(cartProducts)
     const dispatch = useDispatch()
     const {searchTerm} = useSelector(filterSelector)
 
     const logoutUser = async () => {
         try {
-            await logOut()
+            dispatch(logOutAsync())
             toast.success("Logout successful.");
             navigate("/login");
         } catch (error) {

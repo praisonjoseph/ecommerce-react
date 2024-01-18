@@ -2,11 +2,14 @@ import React, { useRef, useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import CenteredContainer from '../components/CenteredContainer'
-import { useAuth } from '../contexts/AuthContext';
+import { signUpAsync } from '../reducers/authReducer';
+import { useDispatch } from 'react-redux';
+// import { useAuth } from '../contexts/AuthContext';
 
 function Signup() {
     const navigate = useNavigate();
-    const {signUp} = useAuth()
+    // const {signUp} = useAuth()
+    const dispatch = useDispatch()
     const emailRef = useRef('')
     const passwordRef = useRef('')
     const passwordConfirmRef = useRef('')
@@ -21,7 +24,7 @@ function Signup() {
         }
         try {
             setLoading(true)
-            signUp(emailRef.current.value, passwordRef.current.value)
+            dispatch(signUpAsync({email: emailRef.current.value, password: passwordRef.current.value}))
             setError('')
             navigate("/")
         } catch (error) {

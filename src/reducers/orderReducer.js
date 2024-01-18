@@ -1,19 +1,17 @@
 import { db } from '../firebase'
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getDocs, query, collection, where, addDoc } from "firebase/firestore";
-// import { useAuth } from '../contexts/AuthContext';
 
 // Async thunk to fetch orders
 export const fetchOrdersAsync = createAsyncThunk(
     "order/fetchOrders",
     async (_, ThunkApi) => {
         try {
-            //   const { user } = ThunkApi.getState().auth; // Assuming you have an auth slice in your Redux store
-            // const { user } = useAuth()
-            console.log("fetchOrdersAsync is getting called")
+            const { user } = ThunkApi.getState().auth; 
+            // console.log("fetchOrdersAsync is getting called", user)
             const docRef = collection(db, "orders");
-            const q = query(docRef)
-            //   const q = query(docRef, where("userID", "==", user.uid));
+            // const q = query(docRef)
+            const q = query(docRef, where("userID", "==", user.uid));
             const querySnapshot = await getDocs(q);
             const data = [];
             querySnapshot.forEach((doc) => {
@@ -26,11 +24,11 @@ export const fetchOrdersAsync = createAsyncThunk(
     }
 );
 
+// Async thunk to add orders
 export const addOrderAsync = createAsyncThunk(
     "order/addOrder",
     async (orderData, Thunkapi) => {
         try {
-            console.log("addOrderAsync is getting called")
             const docRef = await addDoc(collection(db, "orders"), orderData);
             return { id: docRef.id, ...orderData };
         } catch (error) {
@@ -49,9 +47,6 @@ const orderSlice = createSlice({
     name: "order",
     initialState,
     reducers: {
-        // addOrder: (state, action) => {
-        //     state.orders.push(action.payload);
-        // },
     },
     extraReducers: (builder) => {
         builder
@@ -72,13 +67,12 @@ const orderSlice = createSlice({
             })
             .addCase(addOrderAsync.fulfilled, (state, action) => {
                 state.isLoading = false;
-                // state.orders.push(action.payload);
                 // Check if the new order already exists in the orders array
                 const isNewOrder = state.orders.every(
                     (order) => order.id !== action.payload.id
                 );
-
-                // Add the new order only if it doesn't exist in the array
+                // This will make sure to add the new order only if it doesn't exist in the array. 
+                // else it will create duplicate orders on addOrder action
                 if (isNewOrder) {
                     state.orders.push(action.payload);
                 }
@@ -88,45 +82,7 @@ const orderSlice = createSlice({
                 state.error = "Error adding order"
                 console.error("Error adding order:", action.payload);
             });
-    },
-});
+    },});
 
-export const { addOrder } = orderSlice.actions;
-export const orderSelector = (state) => state.orderReducer;
-
+export const orderSelector = (state) => state.order;
 export const orderReducer = orderSlice.reducer;
-
-
-// export const ACTIONS = {
-//     ADD_ORDER: 'ADD_ORDER',
-//     SET_ORDERS: 'SET_ORDERS',
-//     SET_ORDERS_LOADING: 'SET_ORDERS_LOADING'
-// }
-
-// export const intitialState = {
-//     orders: [],
-//     isLoading: false,
-// }
-
-// export function OrderReducer(state, { type, payload }) {
-//     switch (type) {
-//         case ACTIONS.SET_ORDERS:
-//             return {
-//                 ...state,
-//                 orders: payload
-//             };
-//         case ACTIONS.ADD_ORDER:
-//             return {
-//                 ...state,
-//                 orders: [...state.orders, payload],
-//             };
-//         case ACTIONS.SET_ORDERS_LOADING:
-//             return {
-//                 ...state,
-//                 isLoading: payload
-//             };
-
-//         default:
-//             return state
-//     }
-// }

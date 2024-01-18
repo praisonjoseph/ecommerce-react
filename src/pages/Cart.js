@@ -5,7 +5,6 @@ import { AiFillDelete } from "react-icons/ai";
 import styles from './Cart.module.css'
 import { Link, useNavigate } from "react-router-dom";
 // import { useOrders } from "../contexts/OrderContext";
-import { useAuth } from "../contexts/AuthContext";
 import { Timestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { 
@@ -17,33 +16,16 @@ import {
 import { cartSelector } from "../reducers/cartReducer";
 import { useSelector, useDispatch } from 'react-redux';
 import { addOrderAsync } from "../reducers/orderReducer";
-// import { addOrder } from "../reducers/orderReducer";
+import { authSelector } from '../reducers/authReducer';
 
 const Cart = () => {
-  // const {
-  //   cartProducts,
-  //   totalPrice,
-  //   IncreaseQty,
-  //   DecreaseQty,
-  //   DeleteFromCart,
-  //   SetTotal,
-  //   ClearCart,
-  // } = useCart()
   const {cartProducts, totalPrice} = useSelector(cartSelector)
   const dispatch = useDispatch()
-  // const { 
-  //   addOrder 
-  // } = useOrders();
-
-  const {user} = useAuth()
+  // const {user} = useAuth()
+  const {user } = useSelector(authSelector)
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   SetTotal()
-  // }, [cartProducts, SetTotal]);
-
   const handlePurchase = async() => {
-    // Assuming cartProducts contain details for the order
     if (!user) {
       navigate("/login")
       return
@@ -63,9 +45,7 @@ const Cart = () => {
       createdAt: today.toDateString() + " " + today.toLocaleTimeString()
     };
     // // Add order to the order context
-    // await addOrder(orderDetails);
     dispatch(addOrderAsync(orderDetails))
-    // ClearCart();
     dispatch(clearCart())
     navigate("/orders")
   };
