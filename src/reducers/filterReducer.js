@@ -43,7 +43,7 @@ const filterSlice = createSlice({
       );
     },
     filterSearchTerm: (state, action) => {
-      state.searchTerm = action.payload.target.value;
+      state.searchTerm = action.payload;
     },
     clearFilter: (state, action) => {
       state.filteredProducts = action.payload.products;

@@ -8,15 +8,12 @@ import {
   filterSelector,
 } from '../reducers/filterReducer'
 import { useDispatch, useSelector } from 'react-redux'
+import { productSelector } from '../reducers/productReducer'
 
 function ProductList() {
-  const { isLoading, products } = useProducts()
+  // const { isLoading, products } = useProducts()
+  const { isLoading, products } = useSelector(productSelector)
   const dispatch = useDispatch()
-  // const {
-  //   filteredProducts,
-  //   searchTerm,
-  //   FilterBySearch,
-  // } = useFilter()
   const {filteredProducts, searchTerm} = useSelector(filterSelector)
 
   useEffect(() => {

@@ -11,11 +11,12 @@ import {
     PURGE,
     REGISTER,
   } from 'redux-persist'
-// import storage from "redux-persist/lib/storage";
-import storage from "redux-persist/lib/storage/session"
+import storage from "redux-persist/lib/storage";
+// import storage from "redux-persist/lib/storage/session"
 import logger from 'redux-logger'
 import { orderReducer } from './reducers/orderReducer';
 import { authReducer, setUser } from './reducers/authReducer';
+import { productReducer } from './reducers/productReducer';
 
 const persistConfig = {
     key: "cartItems", // key for the localStorage key
@@ -31,6 +32,7 @@ export const store = configureStore({
         filter: filterReducer,
         order: orderReducer,
         auth: authReducer,
+        product: productReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: {

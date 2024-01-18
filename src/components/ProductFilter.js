@@ -9,19 +9,13 @@ import {
     filterByPrice,
     clearFilter,
 } from '../reducers/filterReducer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { productSelector } from '../reducers/productReducer'
 
 function ProductFilter() {
-    const { products, isLoading } = useProducts()
-    // const {
-    //     FilterByPrice,
-    //     FilterByCategory,
-    //     FilterByCompany,
-    //     FilterByColor,
-    //     ClearFilter
-    // } = useFilter()
+    // const { products, isLoading } = useProducts()
+    const { isLoading, products } = useSelector(productSelector)
     const dispatch = useDispatch()
-
     const [price, setPrice] = useState(300)
     const [selectedCompany, setSelectedCompany] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');

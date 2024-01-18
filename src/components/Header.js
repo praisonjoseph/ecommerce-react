@@ -68,7 +68,7 @@ export default function Header() {
                             className="me-2"
                             aria-label="Search"
                             value={searchTerm}
-                            onChange={(event) => {dispatch(filterSearchTerm(event)) }}
+                            onChange={(event) => {dispatch(filterSearchTerm(event.target.value)) }}
                         />
                         <Button variant="outline-success"><FaSearch /></Button>
                     </Form>
