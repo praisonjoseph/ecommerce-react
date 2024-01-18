@@ -1,19 +1,16 @@
 import React, { useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
-// import { useFilter } from '../contexts/filterContext'
-import useProducts from '../hooks/useProducts'
 import {
     filterByCategory,
     filterByCompany,
     filterByColor,
     filterByPrice,
     clearFilter,
-} from '../reducers/filterReducer'
+} from '../redux/reducers/filterReducer'
 import { useDispatch, useSelector } from 'react-redux'
-import { productSelector } from '../reducers/productReducer'
+import { productSelector } from '../redux/reducers/productReducer'
 
 function ProductFilter() {
-    // const { products, isLoading } = useProducts()
     const { isLoading, products } = useSelector(productSelector)
     const dispatch = useDispatch()
     const [price, setPrice] = useState(300)

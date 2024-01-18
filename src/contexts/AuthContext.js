@@ -1,6 +1,6 @@
 import React, { useEffect, createContext, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { observeAuthState, authSelector } from '../reducers/authReducer';
+import { observeAuthState, authSelector } from '../redux/reducers/authReducer';
 import {  Container, Spinner } from 'react-bootstrap'
 
 export const AuthContext = createContext();

@@ -12,11 +12,11 @@ import {
   clearCart,
   increaseQuantity,
   decreaseQuantity,
- } from "../reducers/cartReducer";
-import { cartSelector } from "../reducers/cartReducer";
+ } from "../redux/reducers/cartReducer";
+import { cartSelector } from "../redux/reducers/cartReducer";
 import { useSelector, useDispatch } from 'react-redux';
-import { addOrderAsync } from "../reducers/orderReducer";
-import { authSelector } from '../reducers/authReducer';
+import { addOrderAsync } from "../redux/reducers/orderReducer";
+import { authSelector } from '../redux/reducers/authReducer';
 
 const Cart = () => {
   const {cartProducts, totalPrice} = useSelector(cartSelector)

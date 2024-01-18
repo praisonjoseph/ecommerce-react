@@ -4,7 +4,7 @@ import ProductFilter from '../components/ProductFilter'
 import ProductList from '../components/ProductList'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
-import { fetchProductsAsync } from '../reducers/productReducer';
+import { fetchProductsAsync } from '../redux/reducers/productReducer';
 
 function Home() {
   const { user } = useAuth()

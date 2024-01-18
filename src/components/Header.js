@@ -5,13 +5,13 @@ import { FaShoppingCart, FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
 // import { useFilter } from '../contexts/filterContext';
 // import { useCart } from '../contexts/CartContext';
-import { cartSelector } from "../reducers/cartReducer";
+import { cartSelector } from "../redux/reducers/cartReducer";
 import { useDispatch, useSelector } from 'react-redux';
 import {
     filterSearchTerm,
     filterSelector,
-  } from '../reducers/filterReducer'
-import { logOutAsync } from '../reducers/authReducer';
+  } from '../redux/reducers/filterReducer'
+import { logOutAsync } from '../redux/reducers/authReducer';
 
 export const ShowOnLogin = ({ children }) => {
     const { user } = useAuth()

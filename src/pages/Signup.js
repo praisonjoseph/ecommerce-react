@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import CenteredContainer from '../components/CenteredContainer'
-import { signUpAsync } from '../reducers/authReducer';
+import { signUpAsync } from '../redux/reducers/authReducer';
 import { useDispatch } from 'react-redux';
 // import { useAuth } from '../contexts/AuthContext';
 

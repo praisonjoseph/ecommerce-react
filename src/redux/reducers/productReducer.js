@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 import { collection, query, getDocs } from 'firebase/firestore';
 
 // Async thunk to fetch products

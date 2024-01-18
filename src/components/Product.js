@@ -3,7 +3,7 @@ import { Button, Card } from 'react-bootstrap'
 // import { useCart } from '../contexts/CartContext'
 import { 
     addProductToCart,
-   } from "../reducers/cartReducer";
+   } from "../redux/reducers/cartReducer";
 import { useDispatch } from 'react-redux';
 
 function Product({product}) {

@@ -1,17 +1,14 @@
 import React, { useEffect } from 'react'
 import Product from './Product'
 import { Col, Container, Row, Spinner } from 'react-bootstrap'
-import useProducts from '../hooks/useProducts'
-import { useFilter } from '../contexts/filterContext'
 import {
   filterBySearch,
   filterSelector,
-} from '../reducers/filterReducer'
+} from '../redux/reducers/filterReducer'
 import { useDispatch, useSelector } from 'react-redux'
-import { productSelector } from '../reducers/productReducer'
+import { productSelector } from '../redux/reducers/productReducer'
 
 function ProductList() {
-  // const { isLoading, products } = useProducts()
   const { isLoading, products } = useSelector(productSelector)
   const dispatch = useDispatch()
   const {filteredProducts, searchTerm} = useSelector(filterSelector)

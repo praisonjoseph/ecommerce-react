@@ -6,8 +6,8 @@ import CenteredContainer from '../components/CenteredContainer'
 import { toast } from "react-toastify";
 // import { useCart } from '../contexts/CartContext'
 import { useDispatch, useSelector } from 'react-redux'
-import { authSelector, signInAsync } from '../reducers/authReducer';
-import { cartSelector } from '../reducers/cartReducer';
+import { authSelector, signInAsync } from '../redux/reducers/authReducer';
+import { cartSelector } from '../redux/reducers/cartReducer';
 
 function Login() {
     // const { signIn } = useAuth()

@@ -1,4 +1,4 @@
-import { db } from '../firebase'
+import { db } from '../../firebase'
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getDocs, query, collection, where, addDoc } from "firebase/firestore";
 
