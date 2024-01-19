@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import CenteredContainer from '../components/CenteredContainer'
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from 'react-redux'
-import { authSelector, signInAsync } from '../redux/reducers/authReducer';
+import { signInAsync } from '../redux/reducers/authReducer';
 import { cartSelector } from '../redux/reducers/cartReducer';
 
 function Login() {
@@ -13,14 +13,17 @@ function Login() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const [loading, setLoading] = useState(false)
-    const {cartProducts} = useSelector(cartSelector)
-    // const {user, loading} = useSelector(authSelector)
+    const { cartProducts } = useSelector(cartSelector)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
             setLoading(true)
-            dispatch(signInAsync({email: emailRef.current.value, password: passwordRef.current.value}))
+            await dispatch(signInAsync(
+                {
+                    email: emailRef.current.value,
+                    password: passwordRef.current.value
+                }))
             toast.success("Login successful.");
             if (cartProducts.length > 0) {
                 navigate("/cart")
@@ -56,7 +59,6 @@ function Login() {
                 </Card.Body>
             </Card>
             <div className='w-100 text-center mt-2'>
-                {/* Already have an account? <Link to={Login} >Log In</Link> */}
                 Need an account? <Link to="/signup" >Sign up</Link>
             </div>
         </CenteredContainer>

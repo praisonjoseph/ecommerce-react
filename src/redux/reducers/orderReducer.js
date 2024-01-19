@@ -1,6 +1,6 @@
 import { db } from '../../firebase'
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getDocs, query, collection, where, addDoc } from "firebase/firestore";
+import { getDocs, query, collection, where, addDoc, orderBy, serverTimestamp } from "firebase/firestore";
 
 // Async thunk to fetch orders
 export const fetchOrdersAsync = createAsyncThunk(
@@ -8,10 +8,10 @@ export const fetchOrdersAsync = createAsyncThunk(
     async (_, ThunkApi) => {
         try {
             const { user } = ThunkApi.getState().auth; 
-            // console.log("fetchOrdersAsync is getting called", user)
             const docRef = collection(db, "orders");
             // const q = query(docRef)
-            const q = query(docRef, where("userID", "==", user.uid));
+            // const q = query(docRef, where("userID", "==", user.uid));
+            const q = query(docRef, where("userID", "==", user.uid), orderBy("createdAt", "desc"));
             const querySnapshot = await getDocs(q);
             const data = [];
             querySnapshot.forEach((doc) => {
@@ -29,10 +29,15 @@ export const addOrderAsync = createAsyncThunk(
     "order/addOrder",
     async (orderData, Thunkapi) => {
         try {
-            const docRef = await addDoc(collection(db, "orders"), orderData);
-            return { id: docRef.id, ...orderData };
+            // const docRef = await addDoc(collection(db, "orders"), orderData);
+            const ordersCollection = collection(db, 'orders');
+            const orderDocRef = await addDoc(ordersCollection, {
+              ...orderData,
+              createdAt: serverTimestamp(), 
+            });
+            return { id: orderDocRef.id, ...orderData };
         } catch (error) {
-            return Thunkapi.rejectWithValue(error.message);
+            return Thunkapi.rejectWithValue(`Failed to add order with ${error.message}`);
         }
     }
 );

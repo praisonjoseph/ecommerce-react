@@ -1,6 +1,6 @@
 import { Navbar, Nav, Form, Button, Container } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from "../contexts/AuthContext";
+// import { useAuth } from "../contexts/AuthContext";
 import { FaShoppingCart, FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { cartSelector } from "../redux/reducers/cartReducer";
@@ -9,10 +9,11 @@ import {
     filterSearchTerm,
     filterSelector,
   } from '../redux/reducers/filterReducer'
-import { logOutAsync } from '../redux/reducers/authReducer';
+import { authSelector, logOutAsync } from '../redux/reducers/authReducer';
 
 export const ShowOnLogin = ({ children }) => {
-    const { user } = useAuth()
+    const { user } = useSelector(authSelector);
+    // const { user } = useAuth()
     if (user) {
         return children;
     }
@@ -20,7 +21,8 @@ export const ShowOnLogin = ({ children }) => {
 };
 
 export const ShowOnLogout = ({ children }) => {
-    const { user } = useAuth()
+    // const { user } = useAuth()
+    const { user } = useSelector(authSelector);
     if (!user) {
         return children;
     }
@@ -35,7 +37,7 @@ export default function Header() {
 
     const logoutUser = async () => {
         try {
-            dispatch(logOutAsync())
+            await dispatch(logOutAsync())
             toast.success("Logout successful.");
             navigate("/login");
         } catch (error) {

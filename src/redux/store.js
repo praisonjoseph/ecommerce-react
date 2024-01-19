@@ -13,12 +13,13 @@ export const store = configureStore({
     filter: filterReducer,
     order: orderReducer,
     auth: authReducer,
-    product: productReducer
+    product: productReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(
     {
       serializableCheck: {
-        ignoreActions: ['auth/observeAuthState/fulfilled']
+        ignoreActions: ['auth/observeAuthState/fulfilled'],
+        // ignoredPaths: ['order.orders.*.createdAt']
       }
     }
   ).concat(persistCartMiddleware, logger),

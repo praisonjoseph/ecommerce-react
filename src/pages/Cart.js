@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
 import { Button, Col, Image, ListGroup, Row, Stack } from "react-bootstrap";
 import { AiFillDelete } from "react-icons/ai";
 import styles from './Cart.module.css'
 import { Link, useNavigate } from "react-router-dom";
-import { Timestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { 
   removeProductFromCart,
@@ -13,7 +11,7 @@ import {
  } from "../redux/reducers/cartReducer";
 import { cartSelector } from "../redux/reducers/cartReducer";
 import { useSelector, useDispatch } from 'react-redux';
-import { addOrderAsync } from "../redux/reducers/orderReducer";
+import { addOrderAsync, orderSelector } from "../redux/reducers/orderReducer";
 import { authSelector } from '../redux/reducers/authReducer';
 
 const Cart = () => {
@@ -21,6 +19,7 @@ const Cart = () => {
   const dispatch = useDispatch()
   const {user } = useSelector(authSelector)
   const navigate = useNavigate();
+  const { orders} = useSelector(orderSelector)
 
   const handlePurchase = async() => {
     if (!user) {
@@ -28,21 +27,18 @@ const Cart = () => {
       return
     }
     const today = new Date();
-    const date = today.toDateString();
-    const time = today.toLocaleTimeString();
-
     const orderDetails = {
-      // Extract details from cartProducts
       userID: user.uid,
       userEmail: user.email,
-      orderDate: date,
-      orderTime: time,
+      orderDate: today.toDateString(),
+      orderTime: today.toLocaleTimeString(),
       orderAmount: totalPrice,
       cartProducts,
-      createdAt: today.toDateString() + " " + today.toLocaleTimeString()
     };
     // // Add order to the order context
-    dispatch(addOrderAsync(orderDetails))
+    const order = await dispatch(addOrderAsync(orderDetails))
+    console.log(order.payload.id)
+    toast.success(`Created Order ${order.payload.id}`)
     dispatch(clearCart())
     navigate("/orders")
   };

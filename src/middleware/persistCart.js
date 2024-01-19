@@ -1,4 +1,4 @@
-// Save the cart state in localStorage on every cart action
+// Save/update the cart state in localStorage on every cart action
 export const persistCartMiddleware = (store) => (next) => (action) => {
     const result = next(action);
     const state = store.getState();

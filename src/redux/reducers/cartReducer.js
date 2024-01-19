@@ -11,15 +11,8 @@ const cartSlice = createSlice({
   reducers: {
     addProductToCart: (state, action) => {
       const product = action.payload;
-      const existingProduct = state.cartProducts.find((p) => p.id === product.id);
-
-      if (existingProduct) {
-        // If product is already in the cart, increase its quantity
-        existingProduct.quantity += 1;
-      } else {
-        // If product is not in the cart, add it
-        state.cartProducts.push({ ...product, quantity: 1 });
-      }
+      // Update quantity to 1 and add the product
+      state.cartProducts.push({ ...product, quantity: 1 });
       // Update total price
       state.totalPrice += Number(product.newPrice);
     },
@@ -57,11 +50,11 @@ const cartSlice = createSlice({
       }
     },
     clearCart: (state) => {
-        // Clear the entire cart
-        state.cartProducts = [];
-        // Reset the total price to zero
-        state.totalPrice = 0;
-      },
+      // Clear the entire cart
+      state.cartProducts = [];
+      // Reset the total price to zero
+      state.totalPrice = 0;
+    },
   },
 });
 

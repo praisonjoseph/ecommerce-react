@@ -2,14 +2,18 @@ import React, { useEffect } from 'react'
 import { Container, Card, ListGroup, Spinner } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrdersAsync, orderSelector } from '../redux/reducers/orderReducer';
+import { authSelector } from '../redux/reducers/authReducer';
 
 function Orders() {
 
   const { orders, isLoading, error } = useSelector(orderSelector)
+  const { user, loading } = useSelector(authSelector);
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchOrdersAsync())
+    if (!loading && user) {
+      dispatch(fetchOrdersAsync())
+    }
   }, [dispatch])
 
   return (

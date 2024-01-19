@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import CenteredContainer from '../components/CenteredContainer'
 import { signUpAsync } from '../redux/reducers/authReducer';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 function Signup() {
     const navigate = useNavigate();
@@ -22,7 +23,8 @@ function Signup() {
         }
         try {
             setLoading(true)
-            dispatch(signUpAsync({email: emailRef.current.value, password: passwordRef.current.value}))
+            await dispatch(signUpAsync({email: emailRef.current.value, password: passwordRef.current.value}))
+            toast.success("Signup successful.");
             setError('')
             navigate("/")
         } catch (error) {
@@ -54,7 +56,6 @@ function Signup() {
                 </Card.Body>
             </Card>
             <div className='w-100 text-center mt-2'>
-                {/* Already have an account? <Link to={Login} >Log In</Link> */}
                 Already have an account? <Link to="/login">Log In</Link>
             </div>
         </CenteredContainer>

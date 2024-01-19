@@ -6,15 +6,25 @@ import Signup from "./pages/Signup";
 import Orders from "./pages/Orders";
 import Cart from "./pages/Cart";
 import Header from "./components/Header";
-import { useAuth } from './contexts/AuthContext';
+// import { useAuth } from './contexts/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { authSelector, observeAuthState } from './redux/reducers/authReducer';
+import { useEffect } from 'react';
 
 function App() {
-  const { user } = useAuth()
+  // const { user } = useAuth()
+  const { user } = useSelector(authSelector);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(observeAuthState());
+  }, [dispatch]);
+
   return (
     <div>
       <BrowserRouter>
         <Header />
-        <ToastContainer />
+        <ToastContainer autoClose={1000} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
