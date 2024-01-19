@@ -2,21 +2,17 @@ import React, { useRef, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import CenteredContainer from '../components/CenteredContainer'
-// import { useAuth } from '../contexts/AuthContext'
 import { toast } from "react-toastify";
-// import { useCart } from '../contexts/CartContext'
 import { useDispatch, useSelector } from 'react-redux'
 import { authSelector, signInAsync } from '../redux/reducers/authReducer';
 import { cartSelector } from '../redux/reducers/cartReducer';
 
 function Login() {
-    // const { signIn } = useAuth()
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const emailRef = useRef()
     const passwordRef = useRef()
     const [loading, setLoading] = useState(false)
-    // const { cartProducts } = useCart()
     const {cartProducts} = useSelector(cartSelector)
     // const {user, loading} = useSelector(authSelector)
 

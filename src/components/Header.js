@@ -3,8 +3,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from "../contexts/AuthContext";
 import { FaShoppingCart, FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
-// import { useFilter } from '../contexts/filterContext';
-// import { useCart } from '../contexts/CartContext';
 import { cartSelector } from "../redux/reducers/cartReducer";
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -30,7 +28,6 @@ export const ShowOnLogout = ({ children }) => {
 };
 
 export default function Header() {
-    // const { logOut } = useAuth()
     const navigate = useNavigate();
     const {cartProducts} = useSelector(cartSelector)
     const dispatch = useDispatch()

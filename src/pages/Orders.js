@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-// import { useOrders } from '../contexts/OrderContext';
 import { Container, Card, ListGroup, Spinner } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrdersAsync, orderSelector } from '../redux/reducers/orderReducer';

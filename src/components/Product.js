@@ -1,13 +1,11 @@
 import React, { useCallback } from 'react'
 import { Button, Card } from 'react-bootstrap'
-// import { useCart } from '../contexts/CartContext'
 import { 
     addProductToCart,
    } from "../redux/reducers/cartReducer";
 import { useDispatch } from 'react-redux';
 
 function Product({product}) {
-    // const {AddToCart} = useCart()
     const dispatch = useDispatch()
 
     const AddToCartHandler = () => {

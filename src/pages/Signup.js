@@ -4,11 +4,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import CenteredContainer from '../components/CenteredContainer'
 import { signUpAsync } from '../redux/reducers/authReducer';
 import { useDispatch } from 'react-redux';
-// import { useAuth } from '../contexts/AuthContext';
 
 function Signup() {
     const navigate = useNavigate();
-    // const {signUp} = useAuth()
     const dispatch = useDispatch()
     const emailRef = useRef('')
     const passwordRef = useRef('')

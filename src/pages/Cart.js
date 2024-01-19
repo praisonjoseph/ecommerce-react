@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import { Button, Col, Image, ListGroup, Row, Stack } from "react-bootstrap";
 import { AiFillDelete } from "react-icons/ai";
-// import { useCart } from '../contexts/CartContext'
 import styles from './Cart.module.css'
 import { Link, useNavigate } from "react-router-dom";
-// import { useOrders } from "../contexts/OrderContext";
 import { Timestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { 
@@ -21,7 +19,6 @@ import { authSelector } from '../redux/reducers/authReducer';
 const Cart = () => {
   const {cartProducts, totalPrice} = useSelector(cartSelector)
   const dispatch = useDispatch()
-  // const {user} = useAuth()
   const {user } = useSelector(authSelector)
   const navigate = useNavigate();
 
