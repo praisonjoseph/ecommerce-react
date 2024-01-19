@@ -9,7 +9,8 @@ function Home() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-        dispatch(fetchProductsAsync());       
+    //On mount load the products from database
+    dispatch(fetchProductsAsync());
   }, [dispatch])
 
   return (
@@ -19,7 +20,7 @@ function Home() {
           <ProductFilter />
         </Col>
         <Col xs={12} md={9}>
-          <ProductList/>
+          <ProductList />
         </Col>
       </Row>
     </Container>

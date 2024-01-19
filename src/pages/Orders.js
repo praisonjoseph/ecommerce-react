@@ -6,11 +6,12 @@ import { authSelector } from '../redux/reducers/authReducer';
 
 function Orders() {
 
-  const { orders, isLoading, error } = useSelector(orderSelector)
+  const { orders, isLoading } = useSelector(orderSelector)
   const { user, loading } = useSelector(authSelector);
   const dispatch = useDispatch()
 
   useEffect(() => {
+    // Once user object is present, mount the orders by filtering based on user from database
     if (!loading && user) {
       dispatch(fetchOrdersAsync())
     }

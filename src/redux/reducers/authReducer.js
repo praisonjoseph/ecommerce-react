@@ -12,7 +12,6 @@ export const observeAuthState = createAsyncThunk(
   "auth/observeAuthState",
   async (_, ThunkApi) => {
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
-    //   ThunkApi.dispatch(setUser(user));
         ThunkApi.dispatch(setUser(authUser ? { uid: authUser.uid, email: authUser.email } : null))
     });
 

@@ -11,22 +11,25 @@ import { useDispatch, useSelector } from 'react-redux'
 import { productSelector } from '../redux/reducers/productReducer'
 
 function ProductFilter() {
-    const { isLoading, products } = useSelector(productSelector)
+    const { products } = useSelector(productSelector)
     const dispatch = useDispatch()
     const [price, setPrice] = useState(300)
     const [selectedCompany, setSelectedCompany] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
 
+    //Filter the name of all categories
     const allCategories = [
         "All",
         ...new Set(products.map((product) => product.category)),
     ];
 
+    //Filter the name of all companies
     const allCompanies = [
         "All",
         ...new Set(products.map((product) => product.company)),
     ];
+    //Filter the name of all colors
     const allColors = [
         "All",
         ...new Set(products.map((product) => product.color)),

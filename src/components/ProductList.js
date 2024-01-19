@@ -14,6 +14,7 @@ function ProductList() {
   const {filteredProducts, searchTerm} = useSelector(filterSelector)
 
   useEffect(() => {
+    //dispatch the search value to get the filteredProducts
     dispatch(filterBySearch({products, searchTerm}))
   }, [products, searchTerm])
 
