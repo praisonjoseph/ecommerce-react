@@ -1,6 +1,5 @@
 import { Navbar, Nav, Form, Button, Container } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
-// import { useAuth } from "../contexts/AuthContext";
 import { FaShoppingCart, FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { cartSelector } from "../redux/reducers/cartReducer";
@@ -13,7 +12,6 @@ import { authSelector, logOutAsync } from '../redux/reducers/authReducer';
 
 export const ShowOnLogin = ({ children }) => {
     const { user } = useSelector(authSelector);
-    // const { user } = useAuth()
     if (user) {
         return children;
     }
@@ -21,7 +19,6 @@ export const ShowOnLogin = ({ children }) => {
 };
 
 export const ShowOnLogout = ({ children }) => {
-    // const { user } = useAuth()
     const { user } = useSelector(authSelector);
     if (!user) {
         return children;

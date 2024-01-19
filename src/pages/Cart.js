@@ -11,7 +11,7 @@ import {
  } from "../redux/reducers/cartReducer";
 import { cartSelector } from "../redux/reducers/cartReducer";
 import { useSelector, useDispatch } from 'react-redux';
-import { addOrderAsync, orderSelector } from "../redux/reducers/orderReducer";
+import { addOrderAsync } from "../redux/reducers/orderReducer";
 import { authSelector } from '../redux/reducers/authReducer';
 
 const Cart = () => {
@@ -19,7 +19,6 @@ const Cart = () => {
   const dispatch = useDispatch()
   const {user } = useSelector(authSelector)
   const navigate = useNavigate();
-  const { orders} = useSelector(orderSelector)
 
   const handlePurchase = async() => {
     if (!user) {
@@ -37,7 +36,6 @@ const Cart = () => {
     };
     // // Add order to the order context
     const order = await dispatch(addOrderAsync(orderDetails))
-    console.log(order.payload.id)
     toast.success(`Created Order ${order.payload.id}`)
     dispatch(clearCart())
     navigate("/orders")

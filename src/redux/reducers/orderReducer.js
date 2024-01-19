@@ -9,7 +9,6 @@ export const fetchOrdersAsync = createAsyncThunk(
         try {
             const { user } = ThunkApi.getState().auth; 
             const docRef = collection(db, "orders");
-            // const q = query(docRef)
             // const q = query(docRef, where("userID", "==", user.uid));
             const q = query(docRef, where("userID", "==", user.uid), orderBy("createdAt", "desc"));
             const querySnapshot = await getDocs(q);
@@ -29,7 +28,6 @@ export const addOrderAsync = createAsyncThunk(
     "order/addOrder",
     async (orderData, Thunkapi) => {
         try {
-            // const docRef = await addDoc(collection(db, "orders"), orderData);
             const ordersCollection = collection(db, 'orders');
             const orderDocRef = await addDoc(ordersCollection, {
               ...orderData,
