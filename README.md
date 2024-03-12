@@ -1,12 +1,12 @@
 # Buy Busy 
-Full Stack React Ecommerce created with React and Firebase.
+Full Stack React Ecommerce created with React, Redux Toolkit and Firebase.
 
 ## 🖥️ Tech Stack
 
 ![reactjs](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)&nbsp;
 ![react-router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)&nbsp;
 ![firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white)&nbsp;
-
+![Redux toolkit](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)&nbsp;
 
 
 ## 🚀 Features
